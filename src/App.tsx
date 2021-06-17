@@ -1,13 +1,21 @@
 import React from 'react';
-import styled, { ThemeProvider } from 'styled-components';
+import { ThemeProvider, createGlobalStyle } from 'styled-components';
 import theme from './theme';
-import './App.css';
+import Layout from './layout';
+
+const GlobalStyle = createGlobalStyle`
+  html {
+    background-color: ${props => props.theme.colors.white};
+    color: ${props => props.theme.colors.navy};
+    font-family: 'Lato', sans-serif;
+  }
+`; 
 
 function App() {
   return (
     <ThemeProvider theme={theme}>
-      <div className="App">
-      </div>
+      <GlobalStyle />
+      <Layout>Insert router views here.</Layout>
     </ThemeProvider>
   );
 }
