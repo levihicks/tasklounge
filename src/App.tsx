@@ -11,6 +11,10 @@ const GlobalStyle = createGlobalStyle`
     color: ${props => props.theme.colors.navy};
     font-family: 'Lato', sans-serif;
   }
+  
+  * {
+    box-sizing: border-box;
+  }
 `; 
 
 function App() {

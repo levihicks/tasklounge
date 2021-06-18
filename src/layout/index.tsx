@@ -4,8 +4,9 @@ import SidebarNav from '../components/SidebarNav';
 
 const StyledLayout = styled.div`
     margin: 0 auto;
-    max-width: 1368px;
     height: 100vh;
+    padding-top: 20px;
+    max-width: 1368px;
     display: flex;
 `;
 
