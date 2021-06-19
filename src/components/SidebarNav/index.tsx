@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import * as ROUTES from '../../constants/routes';
 import Logo from '../../assets/taskhub.png';
 import DashboardLogo from '../../assets/dashboard.png';
@@ -18,7 +18,7 @@ const StyledLogoAndTitle = styled.div`
     font-size: ${props => props.theme.fontSizes.medium};
     color: ${props => props.theme.colors.red};
     margin-bottom: 25px;
-    margin-left: 20px;
+    padding-left: 10px;
 `;
 
 const StyledIcon = styled.img`
@@ -37,9 +37,10 @@ const StyledLinkAndIcon = styled.div`
     align-items: center;
     padding: 10px 0;
     margin: 5px 0;
+    padding-left: 10px;
 `;
 
-const StyledLink = styled(Link)`
+const StyledLink = styled(NavLink)`
     text-decoration: none;
     font-weight: bold;
     &:visited {
@@ -47,6 +48,12 @@ const StyledLink = styled(Link)`
     }
     &:hover {
         color: ${props => props.theme.colors.gray};
+    }
+    &.link-active {
+        color: ${props => props.theme.colors.white};
+        background: ${props => props.theme.colors.navy};
+        cursor: default;
+        border-radius: 10px;
     }
 `;
 
@@ -57,18 +64,25 @@ const SidebarNav = () => {
                 <StyledIcon src={Logo} />
                 <div>TaskLounge<StyledSubtitle>The stress-free productivity dashboard.</StyledSubtitle></div>
             </StyledLogoAndTitle>
-            <StyledLinkAndIcon>
-                <StyledIcon src={DashboardLogo} />
-                <StyledLink to={ROUTES.DASHBOARD}>Dashboard</StyledLink>
-            </StyledLinkAndIcon>
-            <StyledLinkAndIcon>
-                <StyledIcon src={TimerLogo} />
-                <StyledLink to={ROUTES.TIMER}>Timer</StyledLink>
-            </StyledLinkAndIcon>
-            <StyledLinkAndIcon>
-                <StyledIcon src={SignInLogo} />
-                <StyledLink to={ROUTES.SIGN_IN}>Sign In</StyledLink>
-            </StyledLinkAndIcon>
+            <StyledLink exact activeClassName="link-active" to={ROUTES.DASHBOARD}>
+                <StyledLinkAndIcon>
+                    <StyledIcon src={DashboardLogo} />
+                    Dashboard
+                </StyledLinkAndIcon>
+            </StyledLink>
+            <StyledLink activeClassName="link-active" to={ROUTES.TIMER}>
+                <StyledLinkAndIcon>
+                    <StyledIcon src={TimerLogo} />
+                    Timer
+                </StyledLinkAndIcon>
+            </StyledLink>
+            <StyledLink activeClassName="link-active" to={ROUTES.SIGN_IN}>
+                <StyledLinkAndIcon>
+                    <StyledIcon src={SignInLogo} />
+                    Sign In
+                </StyledLinkAndIcon>
+            </StyledLink>
+
         </StyledSidebarNav>
     );
 }
