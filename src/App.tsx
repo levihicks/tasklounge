@@ -4,6 +4,7 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import * as ROUTES from './constants/routes';
 import theme from './theme';
 import Layout from './layout';
+import Dashboard from './pages/dashboard';
 
 const GlobalStyle = createGlobalStyle`
   html {
@@ -26,7 +27,7 @@ function App() {
           <Switch>
             <Route path={ROUTES.SIGN_IN}>Sign in!</Route>
             <Route path={ROUTES.TIMER}>Timer!</Route>
-            <Route path={ROUTES.DASHBOARD}>Dashboard!</Route>
+            <Route path={ROUTES.DASHBOARD}><Dashboard /></Route>
           </Switch>
         </Layout>
       </BrowserRouter>
