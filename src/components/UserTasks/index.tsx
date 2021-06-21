@@ -29,7 +29,7 @@ const UserTasks = () => {
     return (
         <StyledUserTasks>
             <UserTasksHeading>My tasks</UserTasksHeading>
-            <div style={{ margin: "10px 0" }}>
+            <div style={{ margin: '10px 0' }}>
                 <UserTasksOption selected={true}>To begin</UserTasksOption>
                 <UserTasksOption selected={false}>In progress</UserTasksOption>
                 <UserTasksOption selected={false}>Completed</UserTasksOption>

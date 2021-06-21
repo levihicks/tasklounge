@@ -64,19 +64,19 @@ const SidebarNav = () => {
                 <StyledIcon src={Logo} />
                 <div>TaskLounge<StyledSubtitle>The stress-free productivity dashboard.</StyledSubtitle></div>
             </StyledLogoAndTitle>
-            <StyledLink exact activeClassName="link-active" to={ROUTES.DASHBOARD}>
+            <StyledLink exact activeClassName='link-active' to={ROUTES.DASHBOARD}>
                 <StyledLinkAndIcon>
                     <StyledIcon src={DashboardLogo} />
                     Dashboard
                 </StyledLinkAndIcon>
             </StyledLink>
-            <StyledLink activeClassName="link-active" to={ROUTES.TIMER}>
+            <StyledLink activeClassName='link-active' to={ROUTES.TIMER}>
                 <StyledLinkAndIcon>
                     <StyledIcon src={TimerLogo} />
                     Timer
                 </StyledLinkAndIcon>
             </StyledLink>
-            <StyledLink activeClassName="link-active" to={ROUTES.SIGN_IN}>
+            <StyledLink activeClassName='link-active' to={ROUTES.SIGN_IN}>
                 <StyledLinkAndIcon>
                     <StyledIcon src={SignInLogo} />
                     Sign In

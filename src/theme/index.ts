@@ -10,11 +10,11 @@ const theme: DefaultTheme = {
 		gray: '#7F8A92'
 	},
 	fontSizes: {
-		extraSmall: ".8rem",
-		small: "1rem",
-		medium: "1.5rem",
-		large: "2rem",
-		extraLarge: "3rem"
+		extraSmall: '.8rem',
+		small: '1rem',
+		medium: '1.5rem',
+		large: '2rem',
+		extraLarge: '3rem'
 	}
 };
 

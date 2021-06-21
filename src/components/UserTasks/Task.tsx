@@ -55,7 +55,7 @@ const Task = () => {
         <Card styleProps={{ marginTop: '20px' }}>
             <TitleAndOptionsButton>
                 <TaskTitle>Task Title</TaskTitle>
-                <StyledOptionsButton><img alt="" src={OptionsButtonImage} /></StyledOptionsButton>
+                <StyledOptionsButton><img alt='' src={OptionsButtonImage} /></StyledOptionsButton>
             </TitleAndOptionsButton>
             <StyledTaskDescription>
                 This is the description of the user's task. Thank you for your time.

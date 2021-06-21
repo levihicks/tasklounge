@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import styled from 'styled-components';
 import SearchIcon from '../../assets/search.png';
 
@@ -28,7 +28,7 @@ const Searchbox = () => {
     return (
         <StyledSearchbox>
                 <img alt='' src={SearchIcon} style={{ marginRight: '5px' }} />
-                <StyledSearchboxInput placeholder="Search..." />
+                <StyledSearchboxInput placeholder='Search...' />
         </StyledSearchbox>
     );
 };
