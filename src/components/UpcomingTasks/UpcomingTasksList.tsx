@@ -7,7 +7,7 @@ const DummyUpcomingTasks = [
         tasks: [
             {
                 title: 'Make one app',
-                time: '9:00 am'
+                time: '9:00 am',
             },
             {
                 title: 'Make one app',
@@ -48,19 +48,19 @@ const UpcomingTask = styled.div`
 const UpcomingTasksList = () => {
     return (
         <div style={{ marginTop: '10px' }}>
-            {DummyUpcomingTasks.map(d => {
+            {DummyUpcomingTasks.map((d, i) => {
                 return (
-                    <>
+                    <div key={i}>
                         <TaskDate>{d.date}</TaskDate>
-                        {d.tasks.map(t => {
+                        {d.tasks.map((t, j) => {
                             return (
-                                <UpcomingTask>
+                                <UpcomingTask key={j}>
                                     <TaskTitle>{t.title}</TaskTitle> 
                                     <TaskTime>{t.time}</TaskTime>
                                 </UpcomingTask>
                             );
                         })}
-                    </>
+                    </div>
                 );
             }) }
         </div>
