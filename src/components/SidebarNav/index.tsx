@@ -83,12 +83,10 @@ const SidebarNav = () => {
                 !userSignedIn &&
                 (
                     <StyledLink activeClassName='link-active' to={ROUTES.SIGN_IN}>
-                        
-                                <StyledLinkAndIcon>
-                                    <StyledIcon src={SignInLogo} />
-                                    Sign In
-                                </StyledLinkAndIcon>
-                            
+                        <StyledLinkAndIcon>
+                            <StyledIcon src={SignInLogo} />
+                            Sign In
+                        </StyledLinkAndIcon>
                     </StyledLink>
                 )
             }

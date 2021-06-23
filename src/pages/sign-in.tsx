@@ -16,13 +16,18 @@ const SignInHeading = styled.div`
     font-weight: bold;
 `;
 
+const StyledCard = styled(Card)`
+    text-align: center;
+    margin-bottom: 50px;
+`;
+
 const SignIn = () => {
     return (
         <StyledSignIn>
-                <Card styleProps={{ textAlign: 'center', marginBottom: '50px' }}>
-                    <SignInHeading>Sign In</SignInHeading>
-                </Card>
-                <StyledFirebaseAuth firebaseAuth={auth} uiConfig={uiConfig} />
+            <StyledCard>
+                <SignInHeading>Sign In</SignInHeading>
+            </StyledCard>
+            <StyledFirebaseAuth firebaseAuth={auth} uiConfig={uiConfig} />
         </StyledSignIn>
     )
 }

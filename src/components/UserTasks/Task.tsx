@@ -50,9 +50,13 @@ const UpdateProgressButton = styled.span`
     }
 `;
 
+const StyledCard = styled(Card)`
+    margin-top: 20px;
+`;
+
 const Task = () => {
     return(
-        <Card styleProps={{ marginTop: '20px' }}>
+        <StyledCard>
             <TitleAndOptionsButton>
                 <TaskTitle>Task Title</TaskTitle>
                 <StyledOptionsButton><img alt='' src={OptionsButtonImage} /></StyledOptionsButton>
@@ -64,7 +68,7 @@ const Task = () => {
                 <Deadline><img alt='' src={DeadlineIcon} /> 6/15</Deadline>
                 <UpdateProgressButton>Begin</UpdateProgressButton>
             </TaskFooter>
-        </Card>
+        </StyledCard>
     );
 };
 

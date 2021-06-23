@@ -8,9 +8,9 @@ const StyledCard = styled.div`
     border-radius: 15px;
 `;
 
-const Card = ({ children, styleProps }: { children: React.ReactNode, styleProps?: {} }) => {
+const Card = ({ children, className }: { children: React.ReactNode, className?: string }) => {
     return (
-        <StyledCard style={styleProps}>
+        <StyledCard className={className}>
             {children}
         </StyledCard>
     );

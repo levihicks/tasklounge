@@ -29,9 +29,13 @@ const GoToButton = styled.div`
     cursor: pointer;
 `;
 
+const StyledCard = styled(Card)`
+    margin: 50px 0;
+`;
+
 const TimerNotice = () => {
     return (
-        <Card styleProps={{ margin: '50px 0' }}>
+        <StyledCard>
             <StyledTimerNotice>
                 <TitleAndDescription>
                     <div>Timer</div>
@@ -41,7 +45,7 @@ const TimerNotice = () => {
                     <img alt='' src={RightArrow} height='20' />
                 </GoToButton>
             </StyledTimerNotice>
-        </Card>
+        </StyledCard>
     );
 };
 

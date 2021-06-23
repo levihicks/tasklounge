@@ -9,6 +9,7 @@ declare module 'styled-components' {
 			orange: string;
 			navy: string;
 			gray: string;
+			lightOrange: string;
 		};
 		fontSizes: {
 			extraSmall: string;

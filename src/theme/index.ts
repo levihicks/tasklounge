@@ -7,7 +7,8 @@ const theme: DefaultTheme = {
 		red: '#E71D36',
 		orange: '#FF9F1C',
 		navy: '#011627',
-		gray: '#7F8A92'
+		gray: '#7F8A92',
+		lightOrange: '#FEECCF'
 	},
 	fontSizes: {
 		extraSmall: '.8rem',
