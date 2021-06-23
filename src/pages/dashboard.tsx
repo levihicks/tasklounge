@@ -3,9 +3,10 @@ import styled from 'styled-components';
 import DashboardGreeting from '../components/DashboardGreeting';
 import Searchbox from '../components/Searchbox';
 import UserTasks from '../components/UserTasks';
-import AccountDropdown from '../components/AccountDropdown';
+// import AccountDropdown from '../components/AccountDropdown';
 import TimerNotice from '../components/TimerNotice';
 import UpcomingTasks from '../components/UpcomingTasks';
+// import { AuthContext } from '../contexts/AuthContext';
 
 const StyledDashboard = styled.div`
     margin-left: 30px;
@@ -21,6 +22,8 @@ const DashboardColumn = styled.div`
 `;
 
 const Dashboard = () => {
+    // let userSignedIn = useContext(AuthContext);
+
     return (
         <StyledDashboard>
             <DashboardColumn style={{flexGrow: 2}}>
@@ -29,7 +32,7 @@ const Dashboard = () => {
                 <UserTasks />
             </DashboardColumn>
             <DashboardColumn style={{ alignItems: 'flex-end' }}>
-                <AccountDropdown />
+                {/* userSignedIn && <AccountDropdown /> */}
                 <TimerNotice />
                 <UpcomingTasks />
             </DashboardColumn>

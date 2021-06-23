@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 import UserIcon from '../../assets/user.png';
+import { signOutHandler } from '../../services/firebase';
+import { AuthContext } from '../../contexts/AuthContext';
 
 const StyledAccountDropdown = styled.div`
     display: flex;
@@ -15,9 +17,11 @@ const StyledUserIcon = styled.img`
 `;
 
 const AccountDropdown = () => {
+    const user = useContext(AuthContext);
+
     return (
-        <StyledAccountDropdown>
-            <StyledUserIcon src={UserIcon} /> Alan ▼
+        <StyledAccountDropdown onClick={signOutHandler}>
+            <StyledUserIcon src={UserIcon} /> {user?.displayName} ▼
         </StyledAccountDropdown>
     );
 };

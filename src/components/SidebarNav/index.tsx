@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 import * as ROUTES from '../../constants/routes';
@@ -6,6 +6,7 @@ import Logo from '../../assets/taskhub.png';
 import DashboardLogo from '../../assets/dashboard.png';
 import TimerLogo from '../../assets/timer.png';
 import SignInLogo from '../../assets/sign-in.png';
+import { AuthContext } from '../../contexts/AuthContext';
 
 const StyledSidebarNav = styled.div`
     display: flex;
@@ -58,6 +59,8 @@ const StyledLink = styled(NavLink)`
 `;
 
 const SidebarNav = () => {
+    const userSignedIn = useContext(AuthContext);
+
     return (
         <StyledSidebarNav>
             <StyledLogoAndTitle>
@@ -76,13 +79,19 @@ const SidebarNav = () => {
                     Timer
                 </StyledLinkAndIcon>
             </StyledLink>
-            <StyledLink activeClassName='link-active' to={ROUTES.SIGN_IN}>
-                <StyledLinkAndIcon>
-                    <StyledIcon src={SignInLogo} />
-                    Sign In
-                </StyledLinkAndIcon>
-            </StyledLink>
-
+            {
+                !userSignedIn &&
+                (
+                    <StyledLink activeClassName='link-active' to={ROUTES.SIGN_IN}>
+                        
+                                <StyledLinkAndIcon>
+                                    <StyledIcon src={SignInLogo} />
+                                    Sign In
+                                </StyledLinkAndIcon>
+                            
+                    </StyledLink>
+                )
+            }
         </StyledSidebarNav>
     );
 }

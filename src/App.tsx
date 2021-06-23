@@ -2,9 +2,11 @@ import React from 'react';
 import { ThemeProvider, createGlobalStyle } from 'styled-components';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import * as ROUTES from './constants/routes';
+import { AuthContextProvider } from './contexts/AuthContext';
 import theme from './theme';
 import Layout from './layout';
 import Dashboard from './pages/dashboard';
+import SignIn from './pages/sign-in';
 
 const GlobalStyle = createGlobalStyle`
   html {
@@ -20,18 +22,20 @@ const GlobalStyle = createGlobalStyle`
 
 function App() {
   return (
-    <ThemeProvider theme={theme}>
-      <BrowserRouter>
-        <GlobalStyle />
-        <Layout>
-          <Switch>
-            <Route path={ROUTES.SIGN_IN}>Sign in!</Route>
-            <Route path={ROUTES.TIMER}>Timer!</Route>
-            <Route path={ROUTES.DASHBOARD}><Dashboard /></Route>
-          </Switch>
-        </Layout>
-      </BrowserRouter>
-    </ThemeProvider>
+    <AuthContextProvider>
+      <ThemeProvider theme={theme}>
+        <BrowserRouter>
+          <GlobalStyle />
+          <Layout>
+            <Switch>
+              <Route path={ROUTES.SIGN_IN}><SignIn /></Route>
+              <Route path={ROUTES.TIMER}>Timer!</Route>
+              <Route path={ROUTES.DASHBOARD}><Dashboard /></Route>
+            </Switch>
+          </Layout>
+        </BrowserRouter>
+      </ThemeProvider>
+    </AuthContextProvider>
   );
 }
 
