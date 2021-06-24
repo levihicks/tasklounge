@@ -8,6 +8,7 @@ import AccountDropdown from '../components/AccountDropdown';
 import TimerNotice from '../components/TimerNotice';
 import UpcomingTasks from '../components/UpcomingTasks';
 import Card from '../components/UI/Card';
+import Spinner from '../components/UI/Spinner';
 import { AuthContext } from '../contexts/AuthContext';
 
 const StyledDashboard = styled.div`
@@ -23,14 +24,12 @@ const DashboardColumn = styled.div`
     flex-direction: column;
 `;
 
-const SignInRequiredText = styled.div`
+const StyledCard = styled(Card)`
     font-size: ${props => props.theme.fontSizes.medium};
     font-weight: bold;
-`;
-
-const StyledCard = styled(Card)`
-    height: 120px;
+    height: 200px;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     margin: 50px;
@@ -42,26 +41,33 @@ const Dashboard = () => {
     return (
         <StyledDashboard>
             { 
-            userSignedIn ?
-            ( 
-                <><DashboardColumn style={{flexGrow: 2}}>
-                    <DashboardGreeting />
-                    <Searchbox />
-                    <UserTasks />
-                </DashboardColumn>
-                <DashboardColumn style={{ alignItems: 'flex-end' }}>
-                    <AccountDropdown />
-                    <TimerNotice />
-                    <UpcomingTasks />
-                </DashboardColumn></>
-            ) :
-            (
-                <StyledCard>
-                    <SignInRequiredText>
-                        <Link to='/sign-in'>Sign in</Link> to view dashboard.
-                    </SignInRequiredText>
-                </StyledCard>
-            )
+                userSignedIn === null ?
+                (
+                    <StyledCard>
+                        Loading...
+                        <Spinner />
+                    </StyledCard>
+                ) :
+                userSignedIn === false ?
+                (
+                    <StyledCard>
+                        <div>
+                            <Link to='/sign-in'>Sign in</Link> to view dashboard.
+                        </div>
+                    </StyledCard>
+                ) :
+                ( 
+                    <><DashboardColumn style={{flexGrow: 2}}>
+                        <DashboardGreeting />
+                        <Searchbox />
+                        <UserTasks />
+                    </DashboardColumn>
+                    <DashboardColumn style={{ alignItems: 'flex-end' }}>
+                        <AccountDropdown />
+                        <TimerNotice />
+                        <UpcomingTasks />
+                    </DashboardColumn></>
+                )
             }
         </StyledDashboard>
     )

@@ -80,7 +80,7 @@ const SidebarNav = () => {
                 </StyledLinkAndIcon>
             </StyledLink>
             {
-                !userSignedIn &&
+                userSignedIn === false &&
                 (
                     <StyledLink activeClassName='link-active' to={ROUTES.SIGN_IN}>
                         <StyledLinkAndIcon>

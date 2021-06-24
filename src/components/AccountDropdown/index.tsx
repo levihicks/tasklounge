@@ -50,7 +50,7 @@ const AccountDropdown = () => {
 
     return (
         <StyledAccountDropdown onClick={() => setDropdownOpen(!dropdownOpen)}>
-            <StyledUserIcon src={UserIcon} /> {user?.displayName} 
+            <StyledUserIcon src={UserIcon} /> {user && user?.displayName} 
             <DropdownArrow className={`${dropdownOpen && 'open'}`}>▼</DropdownArrow>
             {   
                 dropdownOpen &&

@@ -6,16 +6,16 @@ interface User {
     displayName: string;
 }
 
-export const AuthContext = createContext<User | null>(null);
+export const AuthContext = createContext<User | null | false>(null);
 
 export const AuthContextProvider = ({children}: {children: React.ReactNode}) =>{
-    const [currentUser, setCurrentUser] = useState<User | null>(null);
+    const [currentUser, setCurrentUser] = useState<User | null | false>(null);
 
     useEffect(() => {
         let listener = authObserver((user: any) => {
             setCurrentUser(user);
         },
-        () => setCurrentUser(null));
+        () => setCurrentUser(false));
         return () => listener();
     });
 
