@@ -26,6 +26,7 @@ function App() {
       <ThemeProvider theme={theme}>
         <BrowserRouter>
           <GlobalStyle />
+          <div id='modal-root'></div>
           <Layout>
             <Switch>
               <Route path={ROUTES.SIGN_IN}><SignIn /></Route>

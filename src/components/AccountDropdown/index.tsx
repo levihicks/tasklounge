@@ -6,6 +6,7 @@ import { AuthContext } from '../../contexts/AuthContext';
 import Popover from '../UI/Popover';
 
 const StyledAccountDropdown = styled.div`
+    z-index: -1;
     display: flex;
     align-items: center;
     color: ${props => props.theme.colors.orange};

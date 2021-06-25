@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import AddSymbol from '../../assets/add.png';
 import UpcomingTasksList from './UpcomingTasksList';
+import TaskForm from '../TaskForm';
 
 const UpcomingTasksRow = styled.div`
     display: flex;
@@ -33,6 +34,8 @@ const AddTaskButton = styled.div`
 `;
 
 const UpcomingTasks = () => {
+    const [taskFormOpen, setTaskFormOpen] = useState(false);
+
     return (
         <div style={{ width: '100%' }}>
             <UpcomingTasksRow>
@@ -40,10 +43,11 @@ const UpcomingTasks = () => {
                     <CurrentDateText>June 14, 2021</CurrentDateText>
                     <HeadingText>Coming Up</HeadingText> 
                 </div>
-                <AddTaskButton>
+                <AddTaskButton onClick={()=>{setTaskFormOpen(true)}}>
                     <img alt='' src={AddSymbol} style={{ marginRight: '10px' }} />
                     Add task    
                 </AddTaskButton>
+                {taskFormOpen && <TaskForm hide={()=>{setTaskFormOpen(false)}}/> }
             </UpcomingTasksRow>
             <UpcomingTasksList />
         </div>
