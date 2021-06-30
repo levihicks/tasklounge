@@ -6,13 +6,11 @@ import { AuthContext } from '../../contexts/AuthContext';
 import Popover from '../UI/Popover';
 
 const StyledAccountDropdown = styled.div`
-    z-index: -1;
     display: flex;
     align-items: center;
     color: ${props => props.theme.colors.orange};
     font-weight: bold;
     cursor: pointer;
-    position: relative;
     &:hover {
         color: ${props => props.theme.colors.blue};
     }
@@ -38,11 +36,9 @@ const SignOut = styled.div`
 `;
 
 const StyledPopover = styled(Popover)`
-    bottom: 0;
-    right: 0;
-    transform: translateY(100%);
-    width: 100%;
+    width: 150px;
     position: absolute;
+    transform: translateY(45px);
 `;
 
 const AccountDropdown = () => {
