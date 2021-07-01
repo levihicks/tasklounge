@@ -11,10 +11,10 @@ const Input = styled.input`
     background: none;
 `;
 
-const TaskFormInput = ({ headingText }: { headingText: string }) => {
+const TaskFormInput = ({ headingText, change }: { headingText: string, change: (e: any) => void }) => {
     return (
         <TaskFormInputContainer headingText={headingText}>
-            <Input></Input>
+            <Input onChange={change}></Input>
         </TaskFormInputContainer>
     );
 };

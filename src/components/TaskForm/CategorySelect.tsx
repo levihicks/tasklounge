@@ -45,15 +45,24 @@ const AddCategoryInput = styled.input`
     }
 `;
 
-const CategorySelect = ({ headingText }: { headingText: string }) => {
+interface CategorySelectProps {
+    headingText: string;
+    selectedCategories: string[];
+    toggleCategory: (category: string) => void;
+}
+
+const CategorySelect = ({ headingText, selectedCategories, toggleCategory }: CategorySelectProps) => {
     return (
         <>
             <TaskFormInputContainer headingText={headingText}>
                 <Categories>
-                    {DummyCategories.map((c, i) => {
+                    {DummyCategories.map((c) => {
                         return (
-                            <Category>
-                                <Checkbox checked={Boolean(i%2)} key={i}></Checkbox> 
+                            <Category key={c}>
+                                <Checkbox 
+                                    checked={selectedCategories.includes(c)} 
+                                    onClick={() => toggleCategory(c)}>
+                                </Checkbox> 
                                 {c}
                             </Category>
                         );

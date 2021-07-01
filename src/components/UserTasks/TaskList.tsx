@@ -1,11 +1,33 @@
 import React from 'react';
-import Task from './Task';
+import styled from 'styled-components';
+import { useAppSelector } from '../../hooks/typedReduxHooks';
+import UserTask from './UserTask';
+
+const NoTasksPlaceholder = styled.div`
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    border: 2px solid ${props => props.theme.colors.lightOrange};
+    color: ${props => props.theme.colors.orange};
+    font-weight: bold;
+    height: 180px;
+    border-radius: 20px;
+`;
 
 const TaskList = () => {
+    const tasks = useAppSelector(state => state.tasks.tasks);
+
     return (
         <div>
-            <Task />
-            <Task />
+            {
+                tasks.length > 0 ?
+                tasks.map((t) => {
+                    return (<UserTask task={t} />);
+                })
+                : <NoTasksPlaceholder>No tasks.</NoTasksPlaceholder>
+            }
         </div>
     );
 }

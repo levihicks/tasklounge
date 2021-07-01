@@ -7,6 +7,8 @@ import theme from './theme';
 import Layout from './layout';
 import Dashboard from './pages/dashboard';
 import SignIn from './pages/sign-in';
+import { store } from './store';
+import { Provider } from 'react-redux';
 
 const GlobalStyle = createGlobalStyle`
   html {
@@ -22,21 +24,23 @@ const GlobalStyle = createGlobalStyle`
 
 function App() {
   return (
-    <AuthContextProvider>
-      <ThemeProvider theme={theme}>
-        <BrowserRouter>
-          <GlobalStyle />
-          <div id='modal-root'></div>
-          <Layout>
-            <Switch>
-              <Route path={ROUTES.SIGN_IN}><SignIn /></Route>
-              <Route path={ROUTES.TIMER}>Timer!</Route>
-              <Route path={ROUTES.DASHBOARD}><Dashboard /></Route>
-            </Switch>
-          </Layout>
-        </BrowserRouter>
-      </ThemeProvider>
-    </AuthContextProvider>
+    <Provider store={store}>
+      <AuthContextProvider>
+        <ThemeProvider theme={theme}>
+          <BrowserRouter>
+            <GlobalStyle />
+            <div id='modal-root'></div>
+            <Layout>
+              <Switch>
+                <Route path={ROUTES.SIGN_IN}><SignIn /></Route>
+                <Route path={ROUTES.TIMER}>Timer!</Route>
+                <Route path={ROUTES.DASHBOARD}><Dashboard /></Route>
+              </Switch>
+            </Layout>
+          </BrowserRouter>
+        </ThemeProvider>
+      </AuthContextProvider>
+    </Provider>
   );
 }
 

@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import Card from '../UI/Card';
 import OptionsButtonImage from '../../assets/options-button.png';
 import DeadlineIcon from '../../assets/deadline.png';
+import Task from '../../models/task';
 
 const StyledOptionsButton = styled.div`
     cursor: pointer;
@@ -54,22 +55,22 @@ const StyledCard = styled(Card)`
     margin-top: 20px;
 `;
 
-const Task = () => {
+const UserTask = ({ task }: { task: Task }) => {
     return(
         <StyledCard>
             <TitleAndOptionsButton>
-                <TaskTitle>Task Title</TaskTitle>
+                <TaskTitle>{task.title}</TaskTitle>
                 <StyledOptionsButton><img alt='' src={OptionsButtonImage} /></StyledOptionsButton>
             </TitleAndOptionsButton>
             <StyledTaskDescription>
-                This is the description of the user's task. Thank you for your time.
+                {task.description}
             </StyledTaskDescription>
             <TaskFooter>
-                <Deadline><img alt='' src={DeadlineIcon} /> 6/15</Deadline>
+                {task.deadline && <Deadline><img alt='' src={DeadlineIcon} />{task.deadline}</Deadline>}
                 <UpdateProgressButton>Begin</UpdateProgressButton>
             </TaskFooter>
         </StyledCard>
     );
 };
 
-export default Task;
+export default UserTask;
