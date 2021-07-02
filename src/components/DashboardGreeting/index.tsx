@@ -1,5 +1,8 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
+import { AuthContext } from '../../contexts/AuthContext';
+import { useAppSelector } from '../../hooks/typedReduxHooks';
+import * as progressStates from '../../constants/progressStates';
 
 const StyledDashboardGreeting = styled.div`
     color: ${props => props.theme.colors.gray};
@@ -15,13 +18,31 @@ const StyledProgressSummary = styled.div`
 `;
 
 const DashboardGreeting = () => {
+    const user = useContext(AuthContext);
+    const tasks = useAppSelector(state => state.tasks.tasks);
+    const taskCountStrings: string[] = [];
+    for(let i = 0; i <= 2; i++) {
+        const taskCount = tasks.filter(t => t.progressState === i).length;
+        taskCountStrings.push(
+            `${taskCount} task${taskCount !== 1 ? 's' : ''}`
+        );
+    }
+
     return (
         <StyledDashboardGreeting>
-            Hello, User!
+            Hello{user && `, ${user.displayName}`}!
             <StyledProgressSummary>
-                You have <span className='progress-metric'>3 tasks</span> to get started on,
-                <span className='progress-metric'> 7 tasks</span> in progress,
-                and <span className='progress-metric'>4 tasks</span> completed.
+                {tasks.length === 0 
+                ? 'No tasks to show. Add one to get started!' 
+                : 
+                    <>
+                        You have <span className='progress-metric'>
+                        {taskCountStrings[progressStates.TO_BEGIN]}
+                        </span> to get started on, <span className='progress-metric'>
+                        {taskCountStrings[progressStates.IN_PROGRESS]}</span> in progress,
+                        and <span className='progress-metric'>
+                        {taskCountStrings[progressStates.COMPLETED]}</span> completed.
+                    </>}
             </StyledProgressSummary>
         </StyledDashboardGreeting>
     );
