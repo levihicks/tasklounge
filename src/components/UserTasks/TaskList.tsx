@@ -16,16 +16,15 @@ const NoTasksPlaceholder = styled.div`
     border-radius: 20px;
 `;
 
-const TaskList = () => {
+const TaskList = ({ progressState }: { progressState: number }) => {
     const tasks = useAppSelector(state => state.tasks.tasks);
 
     return (
         <div>
             {
                 tasks.length > 0 ?
-                tasks.map((t) => {
-                    return (<UserTask task={t} />);
-                })
+                tasks.filter(t => t.progressState === progressState)
+                    .map(t => (<UserTask task={t} key={t.id} />))
                 : <NoTasksPlaceholder>No tasks.</NoTasksPlaceholder>
             }
         </div>

@@ -42,8 +42,6 @@ const CancelButton = styled(Button)`
     }
 `;
 
-const DummyTask = {title: 'title', description: 'these are words'};
-
 const TaskForm = ({ hide }: { hide: () => void }) => {
     const [titleInput, setTitleInput] = useState('');
     const [descriptionInput, setDescriptionInput] = useState('');
@@ -66,9 +64,11 @@ const TaskForm = ({ hide }: { hide: () => void }) => {
     const addTaskHandler = () => {
         const newTask: Task = {
             title: titleInput,
+            id: String(Math.random()),
             description: descriptionInput,
             deadline: deadlineInput,
             categories: categoriesInput,
+            progressState: 0
         };
         
         dispatch(addTask(newTask));
