@@ -1,8 +1,8 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import DashboardGreeting from '../components/DashboardGreeting';
-import Searchbox from '../components/Searchbox';
+import Search from '../components/Search';
 import UserTasks from '../components/UserTasks';
 import AccountDropdown from '../components/AccountDropdown';
 import TimerNotice from '../components/TimerNotice';
@@ -37,6 +37,7 @@ const StyledCard = styled(Card)`
 
 const Dashboard = () => {
     let userSignedIn = useContext(AuthContext);
+    let [userSearching, setUserSearching] = useState(false);
 
     return (
         <StyledDashboard>
@@ -59,8 +60,10 @@ const Dashboard = () => {
                 ( 
                     <><DashboardColumn style={{flexGrow: 2}}>
                         <DashboardGreeting />
-                        <Searchbox />
-                        <UserTasks />
+                        <Search 
+                            searchingState={userSearching} 
+                            setSearchingState={setUserSearching} />
+                        {!userSearching && <UserTasks />}
                     </DashboardColumn>
                     <DashboardColumn style={{ alignItems: 'flex-end' }}>
                         <AccountDropdown />
