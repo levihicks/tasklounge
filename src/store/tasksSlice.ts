@@ -6,7 +6,7 @@ const DummyTasks = [
         title: 'Yo',
         id: String(Math.random()),
         description: 'This is a task.',
-        deadline: '2/2/10',
+        deadline: '2021-07-03',
         categories: [
             'Programming'
         ],
@@ -16,7 +16,7 @@ const DummyTasks = [
         title: 'Yo again',
         id: String(Math.random()),
         description: 'This is a task.',
-        deadline: '2/2/10',
+        deadline: '2020-01-01',
         categories: [
             'Programming'
         ],
@@ -26,7 +26,7 @@ const DummyTasks = [
         title: 'Yo again fren',
         id: String(Math.random()),
         description: 'This is a task.',
-        deadline: '2/2/10',
+        deadline: '2021-11-04',
         categories: [
             'Programming'
         ],

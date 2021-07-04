@@ -40,7 +40,7 @@ const UpcomingTasks = () => {
         <div style={{ width: '100%' }}>
             <UpcomingTasksRow>
                 <div style={{ flexGrow: 3 }}>
-                    <CurrentDateText>June 14, 2021</CurrentDateText>
+                    <CurrentDateText>{new Date().toDateString()}</CurrentDateText>
                     <HeadingText>Coming Up</HeadingText> 
                 </div>
                 <AddTaskButton onClick={()=>{setTaskFormOpen(true)}}>

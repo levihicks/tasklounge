@@ -50,7 +50,6 @@ const TaskForm = ({ hide }: { hide: () => void }) => {
     const dispatch = useAppDispatch();
 
     const toggleCategory = (category: string) => {
-        console.log(category);
         const index = categoriesInput.indexOf(category);
         if (index === -1)
             setCategoriesInput([...categoriesInput, category]);
@@ -70,9 +69,7 @@ const TaskForm = ({ hide }: { hide: () => void }) => {
             categories: categoriesInput,
             progressState: 0
         };
-        
         dispatch(addTask(newTask));
-
     };
 
     return (
@@ -80,7 +77,7 @@ const TaskForm = ({ hide }: { hide: () => void }) => {
             <StyledTaskForm>
                 <TaskFormInput headingText='Title' change={(event) => setTitleInput(event.target.value)} />
                 <TaskFormTextArea headingText='Description' change={(event) => setDescriptionInput(event.target.value)} />
-                <TaskFormInput headingText='Deadline' change={(event) => setDeadlineInput(event.target.value)} />
+                <TaskFormInput headingText='Deadline' change={(event) => setDeadlineInput(event.target.value)} type={'date'}/>
                 <CategorySelect headingText='Categories' selectedCategories={categoriesInput} toggleCategory={toggleCategory} />
                 <div style={{ display: 'flex' }}>
                     <AddTaskButton onClick={addTaskHandler}>Add task</AddTaskButton>
