@@ -1,6 +1,7 @@
 import firebase from 'firebase';
 import 'firebase/auth';
 import { createBrowserHistory } from 'history';
+import Task from '../models/task';
 
 let firebaseConfig = {
     apiKey: 'AIzaSyD5AFcKYIhJwxsujiHamKfZ0NxJgc0s16M',
@@ -38,4 +39,23 @@ export const authObserver = (success: (user: firebase.User) => void, failure: ()
   auth.onAuthStateChanged((user) => {
       if(user) success(user);
       else failure();
-  });
+  }
+);
+
+export const db = firebase.database();
+
+export const userTasksRef = (uid: string) => db.ref(`users/${uid}/tasks`);
+
+export const addTaskHandler = (uid: string, newTask: Task) => userTasksRef(uid).push(newTask);
+
+export const removeTaskHandler = (uid: string, taskId: string) => {
+    userTasksRef(uid).child(taskId).remove();
+};
+
+export const updateTaskHandler = (uid: string, taskId: string, newData: {[key: string]: any}) => {
+    let newDataObj: {[key: string]: any} = {};
+    Object.keys(newData).forEach((k) => {
+        newDataObj[taskId + '/' + k] = newData[k];
+    })
+    userTasksRef(uid).update(newDataObj);
+};

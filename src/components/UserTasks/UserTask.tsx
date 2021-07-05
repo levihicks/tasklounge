@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
 import Card from '../UI/Card';
 import Popover from '../UI/Popover';
@@ -6,8 +6,8 @@ import OptionsButtonImage from '../../assets/options-button.png';
 import DeadlineIcon from '../../assets/deadline.png';
 import Task from '../../models/task';
 import * as progressStates from '../../constants/progressStates';
-import { useAppDispatch } from '../../hooks/typedReduxHooks';
-import { removeTask, updateTaskProgress } from '../../store/tasksSlice';
+import { removeTaskHandler, updateTaskHandler } from '../../services/firebase';
+import { AuthContext } from '../../contexts/AuthContext';
 
 const StyledOptionsButton = styled.div`
     cursor: pointer;
@@ -79,7 +79,15 @@ const OptionsPopoverButton = styled.div`
 
 const UserTask = ({ task }: { task: Task }) => {
     const [optionsButtonClicked, setOptionsButtonClicked] = useState(false);
-    const dispatch = useAppDispatch();
+    const user = useContext(AuthContext);
+
+    const removeTask = (taskId: string) => {
+        user && removeTaskHandler(user.uid, taskId);
+    };
+
+    const updateProgressState = (taskId: string, taskProgressState: number) => {
+        user && updateTaskHandler(user.uid, taskId, {progressState: taskProgressState + 1});
+    };
 
     return(
         <StyledCard>
@@ -94,7 +102,7 @@ const UserTask = ({ task }: { task: Task }) => {
                         <OptionsPopoverButton>
                             Edit
                         </OptionsPopoverButton>
-                        <OptionsPopoverButton onClick={() => dispatch(removeTask(task.id))}>
+                        <OptionsPopoverButton onClick={() => task.id && removeTask(task.id)}>
                             Remove
                         </OptionsPopoverButton>
                     </StyledPopover>
@@ -105,7 +113,7 @@ const UserTask = ({ task }: { task: Task }) => {
             </StyledTaskDescription>
             <TaskFooter>
                 {task.deadline && <Deadline><img alt='' src={DeadlineIcon} />{task.deadline}</Deadline>}
-                <UpdateProgressButton onClick={() => dispatch(updateTaskProgress(task.id))}>
+                <UpdateProgressButton onClick={() => {updateProgressState(task.id!, task.progressState)}}>
                     {task.progressState === progressStates.TO_BEGIN 
                     ? "Mark as in progress" 
                     : task.progressState === progressStates.IN_PROGRESS 

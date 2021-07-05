@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
 import Modal from '../UI/Modal';
 import TaskFormInput from './TaskFormInput';
 import TaskFormTextArea from './TaskFormTextArea';
 import CategorySelect from './CategorySelect';
-import { useAppDispatch } from '../../hooks/typedReduxHooks';
-import { addTask } from '../../store/tasksSlice';
+import { addTaskHandler } from '../../services/firebase';
 import Task from '../../models/task';
+import { AuthContext } from '../../contexts/AuthContext';
 
 const StyledTaskForm = styled.div`
     color: ${props => props.theme.colors.orange};
@@ -43,11 +43,11 @@ const CancelButton = styled(Button)`
 `;
 
 const TaskForm = ({ hide }: { hide: () => void }) => {
+    const user = useContext(AuthContext);
     const [titleInput, setTitleInput] = useState('');
     const [descriptionInput, setDescriptionInput] = useState('');
     const [deadlineInput, setDeadlineInput] = useState('');
     const [categoriesInput, setCategoriesInput] = useState<string[]>(['Design']);
-    const dispatch = useAppDispatch();
 
     const toggleCategory = (category: string) => {
         const index = categoriesInput.indexOf(category);
@@ -60,16 +60,16 @@ const TaskForm = ({ hide }: { hide: () => void }) => {
         }
     };
 
-    const addTaskHandler = () => {
+    const addTask = () => {
         const newTask: Task = {
             title: titleInput,
-            id: String(Math.random()),
             description: descriptionInput,
             deadline: deadlineInput,
             categories: categoriesInput,
             progressState: 0
         };
-        dispatch(addTask(newTask));
+        if (user)
+            addTaskHandler(user.uid, newTask);
     };
 
     return (
@@ -80,7 +80,7 @@ const TaskForm = ({ hide }: { hide: () => void }) => {
                 <TaskFormInput headingText='Deadline' change={(event) => setDeadlineInput(event.target.value)} type={'date'}/>
                 <CategorySelect headingText='Categories' selectedCategories={categoriesInput} toggleCategory={toggleCategory} />
                 <div style={{ display: 'flex' }}>
-                    <AddTaskButton onClick={addTaskHandler}>Add task</AddTaskButton>
+                    <AddTaskButton onClick={addTask}>Add task</AddTaskButton>
                     <CancelButton onClick={hide}>Cancel</CancelButton>
                 </div>
             </StyledTaskForm>

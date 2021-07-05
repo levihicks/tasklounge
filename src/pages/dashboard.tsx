@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import DashboardGreeting from '../components/DashboardGreeting';
@@ -10,6 +10,9 @@ import UpcomingTasks from '../components/UpcomingTasks';
 import Card from '../components/UI/Card';
 import Spinner from '../components/UI/Spinner';
 import { AuthContext } from '../contexts/AuthContext';
+import { userTasksRef } from '../services/firebase';
+import { useAppDispatch } from '../hooks/typedReduxHooks';
+import { replaceTasks } from '../store/tasksSlice';
 
 const StyledDashboard = styled.div`
     margin-left: 30px;
@@ -36,20 +39,35 @@ const StyledCard = styled(Card)`
 `;
 
 const Dashboard = () => {
-    let userSignedIn = useContext(AuthContext);
+    let user = useContext(AuthContext);
     let [userSearching, setUserSearching] = useState(false);
+    let dispatch = useAppDispatch();
+
+    useEffect(() => {
+        if (user) {
+            let listener = userTasksRef(user.uid).on('value', (snapshot) => {
+                const data = snapshot.val();
+                console.log(data);
+                dispatch(replaceTasks(data));
+            });
+            return () => {
+                if(user)
+                userTasksRef(user.uid).off('value', listener);
+            }
+        }
+    }, [user, dispatch]);
 
     return (
         <StyledDashboard>
             { 
-                userSignedIn === null ?
+                user === null ?
                 (
                     <StyledCard>
                         Loading...
                         <Spinner />
                     </StyledCard>
                 ) :
-                userSignedIn === false ?
+                user === false ?
                 (
                     <StyledCard>
                         <div>

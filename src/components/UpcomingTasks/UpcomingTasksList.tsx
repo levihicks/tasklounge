@@ -54,9 +54,9 @@ const UpcomingTasksList = () => {
         tasksWithDeadlines.forEach(t => {
             const taskDeadline = (t as TaskWithDeadline).deadline;
             if (taskDeadline in tasksByDateObj) 
-                tasksByDateObj[taskDeadline].push({title: t.title, id: t.id});
+                tasksByDateObj[taskDeadline].push({title: t.title, id: t.id!});
             else  
-                tasksByDateObj[taskDeadline] = [{title: t.title, id: t.id}];
+                tasksByDateObj[taskDeadline] = [{title: t.title, id: t.id!}];
         });
         setTasksSortedByDate(tasksByDateObj);
     }, [tasks]);
