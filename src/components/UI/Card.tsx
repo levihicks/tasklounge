@@ -8,9 +8,16 @@ const StyledCard = styled.div`
     border-radius: 15px;
 `;
 
-const Card = ({ children, className }: { children: React.ReactNode, className?: string }) => {
+interface CardProps { 
+    children: React.ReactNode;
+    className?: string;
+    mouseEnter?: () => void;
+    mouseLeave?: () => void;
+}
+
+const Card = ({ children, className, mouseEnter, mouseLeave }: CardProps ) => {
     return (
-        <StyledCard className={className}>
+        <StyledCard className={className} onMouseEnter={mouseEnter} onMouseLeave={mouseLeave}>
             {children}
         </StyledCard>
     );

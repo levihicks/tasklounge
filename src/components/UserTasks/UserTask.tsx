@@ -62,7 +62,8 @@ const StyledCard = styled(Card)`
 
 const StyledPopover = styled(Popover)`
     position: absolute;
-    left: 101%;
+    left: 95%;
+    top: 5%;
     border-radius: 10px;
     min-width: 80px;
 `;
@@ -78,7 +79,7 @@ const OptionsPopoverButton = styled.div`
 `;
 
 const UserTask = ({ task }: { task: Task }) => {
-    const [optionsButtonClicked, setOptionsButtonClicked] = useState(false);
+    const [optionsVisible, setOptionsVisible] = useState(false);
     const user = useContext(AuthContext);
 
     const removeTask = (taskId: string) => {
@@ -90,14 +91,14 @@ const UserTask = ({ task }: { task: Task }) => {
     };
 
     return(
-        <StyledCard>
+        <StyledCard mouseLeave={() => setOptionsVisible(false)}>
             <TitleAndOptionsButton>
                 <TaskTitle>{task.title}</TaskTitle>
-                <StyledOptionsButton onClick={() => setOptionsButtonClicked(!optionsButtonClicked)}>
+                <StyledOptionsButton onMouseEnter={() => setOptionsVisible(true)} >
                     <img alt='' src={OptionsButtonImage} />
                 </StyledOptionsButton>
                 {
-                    optionsButtonClicked && 
+                    optionsVisible && 
                     <StyledPopover>
                         <OptionsPopoverButton>
                             Edit
