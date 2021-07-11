@@ -4,7 +4,7 @@ import Modal from '../UI/Modal';
 import TaskFormInput from './TaskFormInput';
 import TaskFormTextArea from './TaskFormTextArea';
 import CategorySelect from './CategorySelect';
-import { addTaskHandler } from '../../services/firebase';
+import { addTaskHandler, updateTaskHandler } from '../../services/firebase';
 import Task from '../../models/task';
 import { AuthContext } from '../../contexts/AuthContext';
 
@@ -42,12 +42,21 @@ const CancelButton = styled(Button)`
     }
 `;
 
-const TaskForm = ({ hide }: { hide: () => void }) => {
+const TaskForm = ({ hide, initialTask }: { hide: () => void, initialTask?: Task }) => {
     const user = useContext(AuthContext);
-    const [titleInput, setTitleInput] = useState('');
-    const [descriptionInput, setDescriptionInput] = useState('');
-    const [deadlineInput, setDeadlineInput] = useState('');
-    const [categoriesInput, setCategoriesInput] = useState<string[]>(['Design']);
+
+    const initialTaskValues = 
+        {
+            title: (initialTask && initialTask.title) || '',
+            description: (initialTask && initialTask.description) || '',
+            deadline: (initialTask && initialTask.deadline) || '',
+            categories: (initialTask && initialTask.categories) || []
+        }
+
+    const [titleInput, setTitleInput] = useState(initialTaskValues.title);
+    const [descriptionInput, setDescriptionInput] = useState(initialTaskValues.description);
+    const [deadlineInput, setDeadlineInput] = useState(initialTaskValues.deadline);
+    const [categoriesInput, setCategoriesInput] = useState<string[]>(initialTaskValues.categories);
 
     const toggleCategory = (category: string) => {
         const index = categoriesInput.indexOf(category);
@@ -60,27 +69,53 @@ const TaskForm = ({ hide }: { hide: () => void }) => {
         }
     };
 
-    const addTask = () => {
-        const newTask: Task = {
-            title: titleInput,
-            description: descriptionInput,
-            deadline: deadlineInput,
-            categories: categoriesInput,
-            progressState: 0
-        };
-        if (user)
-            addTaskHandler(user.uid, newTask);
+    const submitHandler = () => {
+        if (!initialTask) {
+            const newTask: Task = {
+                title: titleInput,
+                description: descriptionInput,
+                deadline: deadlineInput,
+                categories: categoriesInput,
+                progressState: 0
+            };
+            if (user)
+                addTaskHandler(user.uid, newTask);
+        }
+        else {
+            const updatedTask = {
+                title: titleInput,
+                description: descriptionInput,
+                deadline: deadlineInput,
+                categories: categoriesInput
+            };
+            if (user)
+                updateTaskHandler(user.uid, initialTask.id!, updatedTask);
+        }
+        
+        hide();
     };
 
     return (
         <Modal hide={hide}>
             <StyledTaskForm>
-                <TaskFormInput headingText='Title' change={(event) => setTitleInput(event.target.value)} />
-                <TaskFormTextArea headingText='Description' change={(event) => setDescriptionInput(event.target.value)} />
-                <TaskFormInput headingText='Deadline' change={(event) => setDeadlineInput(event.target.value)} type={'date'}/>
-                <CategorySelect headingText='Categories' selectedCategories={categoriesInput} toggleCategory={toggleCategory} />
+                <TaskFormInput 
+                    headingText='Title' 
+                    change={(event) => setTitleInput(event.target.value)}
+                    val={titleInput} />
+                <TaskFormTextArea 
+                    headingText='Description' 
+                    change={(event) => setDescriptionInput(event.target.value)} 
+                    val={descriptionInput}/>
+                <TaskFormInput 
+                    headingText='Deadline' 
+                    change={(event) => setDeadlineInput(event.target.value)} 
+                    type={'date'}
+                    val={deadlineInput}/>
+                <CategorySelect 
+                    headingText='Categories' 
+                    selectedCategories={categoriesInput} toggleCategory={toggleCategory} />
                 <div style={{ display: 'flex' }}>
-                    <AddTaskButton onClick={addTask}>Add task</AddTaskButton>
+                    <AddTaskButton onClick={submitHandler}>{initialTask ? 'Edit task' : 'Add task'}</AddTaskButton>
                     <CancelButton onClick={hide}>Cancel</CancelButton>
                 </div>
             </StyledTaskForm>

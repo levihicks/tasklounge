@@ -8,6 +8,7 @@ import Task from '../../models/task';
 import * as progressStates from '../../constants/progressStates';
 import { removeTaskHandler, updateTaskHandler } from '../../services/firebase';
 import { AuthContext } from '../../contexts/AuthContext';
+import TaskForm from '../TaskForm';
 
 const StyledOptionsButton = styled.div`
     cursor: pointer;
@@ -80,6 +81,7 @@ const OptionsPopoverButton = styled.div`
 
 const UserTask = ({ task }: { task: Task }) => {
     const [optionsVisible, setOptionsVisible] = useState(false);
+    const [editFormVisible, setEditFormVisible] = useState(false);
     const user = useContext(AuthContext);
 
     const removeTask = (taskId: string) => {
@@ -88,6 +90,11 @@ const UserTask = ({ task }: { task: Task }) => {
 
     const updateProgressState = (taskId: string, taskProgressState: number) => {
         user && updateTaskHandler(user.uid, taskId, {progressState: taskProgressState + 1});
+    };
+
+    const openFormEdit = () => {
+        setOptionsVisible(false);
+        setEditFormVisible(true);
     };
 
     return(
@@ -100,7 +107,7 @@ const UserTask = ({ task }: { task: Task }) => {
                 {
                     optionsVisible && 
                     <StyledPopover>
-                        <OptionsPopoverButton>
+                        <OptionsPopoverButton onClick={openFormEdit}>
                             Edit
                         </OptionsPopoverButton>
                         <OptionsPopoverButton onClick={() => task.id && removeTask(task.id)}>
@@ -121,6 +128,9 @@ const UserTask = ({ task }: { task: Task }) => {
                     ? "Mark as completed" : ""} 
                 </UpdateProgressButton>
             </TaskFooter>
+            {
+                editFormVisible && <TaskForm initialTask={task} hide={() => setEditFormVisible(false)} />
+            }
         </StyledCard>
     );
 };

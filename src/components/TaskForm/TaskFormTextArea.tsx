@@ -14,10 +14,16 @@ const TextArea = styled.textarea`
     margin: 20px 0;
 `;
 
-const TaskFormTextArea = ({ headingText, change }: { headingText: string, change: (e: any) => void }) => {
+interface TaskFormTextAreaProps {
+    headingText: string;
+    change: (e: any) => void;
+    val: string;
+}
+
+const TaskFormTextArea = ({ headingText, change, val }: TaskFormTextAreaProps) => {
     return (
         <TaskFormInputContainer headingText={headingText}>
-            <TextArea onChange={change}></TextArea>  
+            <TextArea onChange={change} value={val}></TextArea>  
         </TaskFormInputContainer>
     );
 };

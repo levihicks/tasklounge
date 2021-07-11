@@ -14,13 +14,14 @@ const Input = styled.input`
 interface TaskFormInputProps {
     headingText: string;
     change: (e: any) => void;
-    type?: string
+    type?: string,
+    val: string
 }
 
-const TaskFormInput = ({ headingText, change, type }: TaskFormInputProps ) => {
+const TaskFormInput = ({ headingText, change, type, val }: TaskFormInputProps ) => {
     return (
         <TaskFormInputContainer headingText={headingText}>
-            <Input onChange={change} type={type}></Input>
+            <Input onChange={change} type={type} value={val}></Input>
         </TaskFormInputContainer>
     );
 };
