@@ -2,10 +2,10 @@ import React, { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import TaskFormInputContainer from './TaskFormInputContainer';
 import AddIcon from '../../assets/add-orange.png'
-import { setCategoriesHandler, userCategoriesRef } from '../../services/firebase';
+import { userCategoriesRef } from '../../services/firebase';
 import { AuthContext } from '../../contexts/AuthContext';
 import { useAppDispatch, useAppSelector } from '../../hooks/typedReduxHooks';
-import { replaceCategories, replaceTasks } from '../../store/tasksSlice';
+import { replaceCategories, replaceTasks, setCategories } from '../../store/tasksSlice';
 import Task from '../../models/task';
 
 const Checkbox = styled.div<{checked: Boolean}>`
@@ -100,7 +100,10 @@ const CategorySelect = ({ headingText, selectedCategories, toggleCategory }: Cat
 
     const enterPressHandler = () => {
         if (user)
-            setCategoriesHandler(user.uid, [...categories, addCategoryInput]);
+            dispatch(setCategories({
+                uid: user.uid, 
+                newCategories: [...categories, addCategoryInput]
+            }));
         setAddCategoryInput('');
     };
 
@@ -113,11 +116,12 @@ const CategorySelect = ({ headingText, selectedCategories, toggleCategory }: Cat
                 delete filteredTasks[t.id!].id;
             }
         });
-
-        console.log(filteredTasks);
         
         if (user) {
-            setCategoriesHandler(user.uid, [...categories].filter(c => c !== category));
+            dispatch(setCategories({
+                uid: user.uid, 
+                newCategories: [...categories].filter(c => c !== category)
+            }));
             replaceTasks(filteredTasks);
         }
         
@@ -129,7 +133,7 @@ const CategorySelect = ({ headingText, selectedCategories, toggleCategory }: Cat
                 <Categories>
                     {categories.length > 0 ? categories.map((c) => {
                         return (
-                            <Category key={c}>
+                            <Category key={Math.random()}>
                                 <Checkbox 
                                     checked={selectedCategories.includes(c)} 
                                     onClick={() => toggleCategory(c)}>

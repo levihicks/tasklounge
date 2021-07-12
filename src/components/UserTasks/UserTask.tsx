@@ -6,9 +6,10 @@ import OptionsButtonImage from '../../assets/options-button.png';
 import DeadlineIcon from '../../assets/deadline.png';
 import Task from '../../models/task';
 import * as progressStates from '../../constants/progressStates';
-import { removeTaskHandler, updateTaskHandler } from '../../services/firebase';
 import { AuthContext } from '../../contexts/AuthContext';
 import TaskForm from '../TaskForm';
+import { removeTask, updateTask } from '../../store/tasksSlice';
+import { useAppDispatch } from '../../hooks/typedReduxHooks';
 
 const StyledOptionsButton = styled.div`
     cursor: pointer;
@@ -83,13 +84,18 @@ const UserTask = ({ task }: { task: Task }) => {
     const [optionsVisible, setOptionsVisible] = useState(false);
     const [editFormVisible, setEditFormVisible] = useState(false);
     const user = useContext(AuthContext);
+    const dispatch = useAppDispatch();
 
-    const removeTask = (taskId: string) => {
-        user && removeTaskHandler(user.uid, taskId);
+    const removeTaskHandler = (taskId: string) => {
+        user && dispatch(removeTask({uid: user.uid, taskId}));
     };
 
     const updateProgressState = (taskId: string, taskProgressState: number) => {
-        user && updateTaskHandler(user.uid, taskId, {progressState: taskProgressState + 1});
+        user && dispatch(updateTask({
+            uid: user.uid, 
+            taskId, 
+            newData: {progressState: taskProgressState + 1}
+        }));
     };
 
     const openFormEdit = () => {
@@ -110,7 +116,7 @@ const UserTask = ({ task }: { task: Task }) => {
                         <OptionsPopoverButton onClick={openFormEdit}>
                             Edit
                         </OptionsPopoverButton>
-                        <OptionsPopoverButton onClick={() => task.id && removeTask(task.id)}>
+                        <OptionsPopoverButton onClick={() => task.id && removeTaskHandler(task.id)}>
                             Remove
                         </OptionsPopoverButton>
                     </StyledPopover>

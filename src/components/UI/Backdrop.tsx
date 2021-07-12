@@ -9,11 +9,12 @@ const StyledBackdrop = styled.div`
     width: 100vw;
     opacity: .5;
     background: ${props => props.theme.colors.navy};
+    z-index: 99;
 `;
 
-const Backdrop = ({ hide }: { hide: () => void }) => {
+const Backdrop = ({ hide, styleProps }: { hide: () => void, styleProps: {[key: string]: any} | undefined }) => {
     return (
-        <StyledBackdrop onClick={hide} />
+        <StyledBackdrop style={styleProps} onClick={hide} />
     );
 };
 

@@ -4,9 +4,10 @@ import Modal from '../UI/Modal';
 import TaskFormInput from './TaskFormInput';
 import TaskFormTextArea from './TaskFormTextArea';
 import CategorySelect from './CategorySelect';
-import { addTaskHandler, updateTaskHandler } from '../../services/firebase';
 import Task from '../../models/task';
 import { AuthContext } from '../../contexts/AuthContext';
+import { addTask, updateTask } from '../../store/tasksSlice';
+import { useAppDispatch } from '../../hooks/typedReduxHooks';
 
 const StyledTaskForm = styled.div`
     color: ${props => props.theme.colors.orange};
@@ -44,6 +45,7 @@ const CancelButton = styled(Button)`
 
 const TaskForm = ({ hide, initialTask }: { hide: () => void, initialTask?: Task }) => {
     const user = useContext(AuthContext);
+    const dispatch = useAppDispatch();
 
     const initialTaskValues = 
         {
@@ -79,7 +81,7 @@ const TaskForm = ({ hide, initialTask }: { hide: () => void, initialTask?: Task 
                 progressState: 0
             };
             if (user)
-                addTaskHandler(user.uid, newTask);
+                dispatch(addTask({uid: user.uid, newTask}));
         }
         else {
             const updatedTask = {
@@ -89,7 +91,7 @@ const TaskForm = ({ hide, initialTask }: { hide: () => void, initialTask?: Task 
                 categories: categoriesInput
             };
             if (user)
-                updateTaskHandler(user.uid, initialTask.id!, updatedTask);
+                dispatch(updateTask({uid: user.uid, taskId: initialTask.id!, newData: updatedTask}));
         }
         
         hide();

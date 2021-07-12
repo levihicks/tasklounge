@@ -11,8 +11,9 @@ import Card from '../components/UI/Card';
 import Spinner from '../components/UI/Spinner';
 import { AuthContext } from '../contexts/AuthContext';
 import { userTasksRef } from '../services/firebase';
-import { useAppDispatch } from '../hooks/typedReduxHooks';
-import { replaceTasks } from '../store/tasksSlice';
+import { useAppDispatch, useAppSelector } from '../hooks/typedReduxHooks';
+import { removeError, replaceTasks } from '../store/tasksSlice';
+import Modal from '../components/UI/Modal';
 
 const StyledDashboard = styled.div`
     margin-left: 30px;
@@ -38,10 +39,22 @@ const StyledCard = styled(Card)`
     margin: 50px;
 `;
 
+const StyledModal = styled(Modal)`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    min-width: 300px;
+    min-height: 300px;
+    z-index: 102;
+`
+
 const Dashboard = () => {
     let user = useContext(AuthContext);
     let [userSearching, setUserSearching] = useState(false);
-    let dispatch = useAppDispatch();
+    const dispatch = useAppDispatch();
+    const tasksLoading = useAppSelector(state => state.tasks.loading);
+    const tasksError = useAppSelector(state => state.tasks.error);
 
     useEffect(() => {
         if (user) {
@@ -88,6 +101,22 @@ const Dashboard = () => {
                         <UpcomingTasks />
                     </DashboardColumn></>
                 )
+            }
+            {
+                tasksLoading && 
+                    <StyledModal 
+                        backdropStyle={{zIndex: 101}} 
+                        hide={() => {}}>
+                        <Spinner />Loading...
+                    </StyledModal>
+            }
+            {
+                tasksError && 
+                    <StyledModal 
+                        backdropStyle={{zIndex: 101}} 
+                        hide={() => dispatch(removeError())}>
+                        An error occurred. Please try again.
+                    </StyledModal>
             }
         </StyledDashboard>
     )

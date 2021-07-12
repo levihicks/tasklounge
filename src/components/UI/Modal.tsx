@@ -16,14 +16,21 @@ const StyledModal = styled.div`
     border-radius: 10px;
 `;
 
-const Modal = ({ children, hide }: { children: React.ReactNode, hide: () => void }) => {
+interface ModalProps {
+    children: React.ReactNode;
+    hide: () => void;
+    className?: string;
+    backdropStyle?: {[key: string]: any};
+}
+
+const Modal = ({ children, hide, className, backdropStyle }: ModalProps) => {
     return (
         <>
             {ReactDOM.createPortal(
                 (
                     <>
-                        <Backdrop hide={hide} />
-                        <StyledModal>
+                        <Backdrop styleProps={backdropStyle} hide={hide} />
+                        <StyledModal className={className}>
                             {children}
                         </StyledModal>
                     </>
