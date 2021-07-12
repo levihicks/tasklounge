@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import TaskFormInputContainer from './TaskFormInputContainer';
 import AddIcon from '../../assets/add-orange.png'
-
-const DummyCategories = ['Programming', 'Design', 'Investing'];
+import { setCategoriesHandler, userCategoriesRef } from '../../services/firebase';
+import { AuthContext } from '../../contexts/AuthContext';
+import { useAppDispatch, useAppSelector } from '../../hooks/typedReduxHooks';
+import { replaceCategories, replaceTasks } from '../../store/tasksSlice';
+import Task from '../../models/task';
 
 const Checkbox = styled.div<{checked: Boolean}>`
     height: 25px;
@@ -27,16 +30,38 @@ const Category = styled.div`
 `;
 
 const AddCategory = styled.div`
-    border-bottom: 1px solid ${props => props.theme.colors.orange};
+    border-bottom: 2px solid ${props => props.theme.colors.orange};
+    width: 90%;
+    margin: auto;
+    display: flex;
+    align-items: center;
 `;
 
 const StyledAddIcon = styled.img`
+    height: 10px;
     margin: 0 10px;
+`;
+
+const StyledDeleteIcon = styled.img`
+    transform: rotate(45deg);
+    margin-left: 5px;
+    display: none;
+    cursor: pointer;
+
+    div:hover > & {
+        display: inline;
+    }
+
+    &:hover {
+        opacity: 0.5;
+    }
 `;
 
 const AddCategoryInput = styled.input`
     color: ${props => props.theme.colors.orange};
-    font-size: ${props => props.theme.fontSizes.medium};
+    font-size: ${props => props.theme.fontSizes.small};
+    flex-grow: 1;
+    font-weight: bold;
     background: none;
     border: none;
     outline: none;
@@ -52,11 +77,57 @@ interface CategorySelectProps {
 }
 
 const CategorySelect = ({ headingText, selectedCategories, toggleCategory }: CategorySelectProps) => {
+
+    const [addCategoryInput, setAddCategoryInput] = useState('');
+    const user = useContext(AuthContext);
+    const dispatch = useAppDispatch();
+    const categories = useAppSelector(state => state.tasks.categories);
+    const tasks = useAppSelector(state => state.tasks.tasks);
+
+
+    useEffect(() => {
+        if (user) {
+            let listener = userCategoriesRef(user.uid).on('value', (snapshot) => {
+                const data = snapshot.val();
+                dispatch(replaceCategories(data));
+            });
+            return () => {
+                if (user)
+                    userCategoriesRef(user.uid).off('value', listener);
+            }
+        }
+    }, [user, dispatch])
+
+    const enterPressHandler = () => {
+        if (user)
+            setCategoriesHandler(user.uid, [...categories, addCategoryInput]);
+        setAddCategoryInput('');
+    };
+
+    const deleteCategoryHandler = (category: string) => {
+        const filteredTasks: {[key: string]: Task} = {};
+
+        tasks.forEach(t => {
+            if (t.id) {
+                filteredTasks[t.id] = {...t};
+                delete filteredTasks[t.id!].id;
+            }
+        });
+
+        console.log(filteredTasks);
+        
+        if (user) {
+            setCategoriesHandler(user.uid, [...categories].filter(c => c !== category));
+            replaceTasks(filteredTasks);
+        }
+        
+    };
+
     return (
         <>
             <TaskFormInputContainer headingText={headingText}>
                 <Categories>
-                    {DummyCategories.map((c) => {
+                    {categories.length > 0 ? categories.map((c) => {
                         return (
                             <Category key={c}>
                                 <Checkbox 
@@ -64,14 +135,20 @@ const CategorySelect = ({ headingText, selectedCategories, toggleCategory }: Cat
                                     onClick={() => toggleCategory(c)}>
                                 </Checkbox> 
                                 {c}
+                                <StyledDeleteIcon onClick={() => deleteCategoryHandler(c)} src={AddIcon} alt='' />
                             </Category>
                         );
-                    })}
+                    }) : 'No categories. Add some to organize your tasks.'}
                 </Categories>
             </TaskFormInputContainer>
             <AddCategory>
                 <StyledAddIcon alt='' src={AddIcon} />
-                <AddCategoryInput placeholder='Add category...' />
+                <AddCategoryInput 
+                    onKeyPress={(event) => event.key === 'Enter' && enterPressHandler()} 
+                    onChange={(event) => setAddCategoryInput(event.target.value)} 
+                    placeholder='Add category...'
+                    value={addCategoryInput} />
+                <span>{addCategoryInput.length > 0 && '("Enter" to add)'}</span>
             </AddCategory>
         </>
     )

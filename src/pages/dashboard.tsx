@@ -47,7 +47,6 @@ const Dashboard = () => {
         if (user) {
             let listener = userTasksRef(user.uid).on('value', (snapshot) => {
                 const data = snapshot.val();
-                console.log(data);
                 dispatch(replaceTasks(data));
             });
             return () => {

@@ -59,3 +59,10 @@ export const updateTaskHandler = (uid: string, taskId: string, newData: {[key: s
     })
     userTasksRef(uid).update(newDataObj);
 };
+
+export const userCategoriesRef = (uid: string) => db.ref(`users/${uid}/categories`);
+
+export const setCategoriesHandler = (uid: string, newCategories: string[]) => {
+    userCategoriesRef(uid).set(newCategories);
+}
+    
