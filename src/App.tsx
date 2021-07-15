@@ -9,6 +9,7 @@ import Dashboard from './pages/dashboard';
 import SignIn from './pages/sign-in';
 import { store } from './store';
 import { Provider } from 'react-redux';
+import Timer from './pages/timer';
 
 const GlobalStyle = createGlobalStyle`
   html {
@@ -33,7 +34,7 @@ function App() {
             <Layout>
               <Switch>
                 <Route path={ROUTES.SIGN_IN}><SignIn /></Route>
-                <Route path={ROUTES.TIMER}>Timer!</Route>
+                <Route path={ROUTES.TIMER}><Timer /></Route>
                 <Route path={ROUTES.DASHBOARD}><Dashboard /></Route>
               </Switch>
             </Layout>

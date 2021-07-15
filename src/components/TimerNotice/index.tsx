@@ -1,4 +1,6 @@
 import React from 'react';
+import { useHistory } from "react-router-dom";
+import * as ROUTES from '../../constants/routes';
 import styled from 'styled-components';
 import Card from '../UI/Card';
 import RightArrow from '../../assets/right-arrow.png';
@@ -34,6 +36,12 @@ const StyledCard = styled(Card)`
 `;
 
 const TimerNotice = () => {
+    let history = useHistory();
+
+    const clickHandler = () => {
+        history.push(ROUTES.TIMER);
+    };
+
     return (
         <StyledCard>
             <StyledTimerNotice>
@@ -41,7 +49,7 @@ const TimerNotice = () => {
                     <div>Timer</div>
                     <Description>Featuring the Pomodoro Method!</Description>
                 </TitleAndDescription>
-                <GoToButton>
+                <GoToButton onClick={clickHandler}>
                     <img alt='' src={RightArrow} height='20' />
                 </GoToButton>
             </StyledTimerNotice>
