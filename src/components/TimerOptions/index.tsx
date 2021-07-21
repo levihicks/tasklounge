@@ -1,10 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPause, faPlay, faVolumeMute, faVolumeUp, faStepForward } from '@fortawesome/free-solid-svg-icons';
+import { faPause, faPlay, faVolumeMute, faVolumeUp, faStepForward, faStop } from '@fortawesome/free-solid-svg-icons';
 import theme from '../../theme';
 import { useAppDispatch, useAppSelector } from '../../hooks/typedReduxHooks';
-import { setMuted, startTimer } from '../../store/timerSlice';
+import { incrementPomodoroPhase, pauseTimer, setMuted, startTimer, stopTimer } from '../../store/timerSlice';
 
 const TimerButton = styled.div<{disabled?: boolean}>`
     cursor: ${props => props.disabled ? 'disabled' : 'pointer'};
@@ -26,6 +26,7 @@ const TimerButton = styled.div<{disabled?: boolean}>`
 const TimerOptions = () => {
     const dispatch = useAppDispatch();
     const muted = useAppSelector(state => state.timer.muted);
+    const endTime = useAppSelector(state => state.timer.endTime);
     const pomodoroMode = useAppSelector(state => state.timer.pomodoroModeOn);
     const beep = new Audio('/beep.mp3');
 
@@ -33,21 +34,26 @@ const TimerOptions = () => {
         if (muted)
             beep.play();
         dispatch(setMuted(!muted));
-    }
+    };
+
+    const skipForward = () => {
+        dispatch(incrementPomodoroPhase());
+        dispatch(startTimer());
+    };
 
     return (
         <>
-            <TimerButton disabled>
+            <TimerButton disabled={Boolean(!endTime)} onClick={() => dispatch(pauseTimer())}>
                 <FontAwesomeIcon icon={faPause} color={theme.colors.white}  />
             </TimerButton>
-            <TimerButton onClick={() => dispatch(startTimer())}>
-                <FontAwesomeIcon icon={faPlay} color={theme.colors.white}  />
+            <TimerButton onClick={() => dispatch(endTime ? stopTimer() : startTimer())}>
+                <FontAwesomeIcon icon={endTime ? faStop : faPlay} color={theme.colors.white}  />
             </TimerButton>
             <TimerButton onClick={soundToggleHandler}>
                 <FontAwesomeIcon icon={muted ? faVolumeMute : faVolumeUp} color={theme.colors.white}  />
             </TimerButton>
             {pomodoroMode && 
-            <TimerButton disabled>
+            <TimerButton disabled={Boolean(!endTime)} onClick={skipForward}>
                 <FontAwesomeIcon icon={faStepForward} color={theme.colors.white}  />
             </TimerButton>}
         </>

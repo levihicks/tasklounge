@@ -5,7 +5,8 @@ import { faChevronUp, faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { useAppDispatch, useAppSelector } from '../../hooks/typedReduxHooks';
 import { 
     setRegularDuration as setRegularDurationAction,
-    setPomodoroDuration as setPomodoroDurationAction } from '../../store/timerSlice';
+    setPomodoroDuration as setPomodoroDurationAction,
+    setIntervals } from '../../store/timerSlice';
 import theme from '../../theme';
 
 const getPeriodColor = (period: string | undefined) => {
@@ -79,13 +80,13 @@ const Chevron = styled.div`
 `;
 
 const DurationOptions = () => {
+    const dispatch = useAppDispatch();
     const timerState = useAppSelector(state => state.timer);
+    
     const [regularDuration, setRegularDuration] = useState<number | ''>(10);
     const [pomodoroDuration, setPomodoroDuration] = useState<number | ''>(25);
     const [shortBreakDuration, setShortBreakDuration] = useState<number | ''>(5);
     const [longBreakDuration, setLongBreakDuration] = useState<number | ''>(15);
-    const [intervals, setIntervals] = useState<number>(4);
-    const dispatch = useAppDispatch();
     
     const durationInputHandler = (inputValue: string, callback: (val: number | '') => void) => {
         if (inputValue === '') 
@@ -95,8 +96,8 @@ const DurationOptions = () => {
     }
 
     const chevronClickHandler = (val: 1 | -1) => {
-        if (intervals + val > 0)
-            setIntervals(intervals + val);
+        if (timerState.intervals + val > 0)
+            dispatch(setIntervals(timerState.intervals + val));
     }
 
     const updateDurationOption = (
@@ -135,14 +136,22 @@ const DurationOptions = () => {
     return <>{timerState.pomodoroModeOn ? 
         (<>
             <Row>
-                <ProgressBubble period='pomodoro' active/>
-                {Array.from(Array(intervals - 1)).map((i) => 
+                <ProgressBubble 
+                    period='pomodoro' 
+                    active={timerState.pomodoroPhase === 0}/>
+                {Array.from(Array(timerState.intervals - 1)).map((i, index) => 
                     <div style={{display: 'flex'}} key={Math.random()}>
-                        <ProgressBubble period='shortBreak' />
-                        <ProgressBubble period='pomodoro' />
+                        <ProgressBubble 
+                            period='shortBreak'
+                            active={timerState.pomodoroPhase === index * 2 + 1} />
+                        <ProgressBubble 
+                            period='pomodoro'
+                            active={timerState.pomodoroPhase === index * 2 + 2} />
                     </div>
                 )}
-                <ProgressBubble period='longBreak' />
+                <ProgressBubble 
+                    period='longBreak' 
+                    active={timerState.pomodoroPhase === timerState.intervals * 2 - 1} />
             </Row>
             <Row>
                 <DurationOption>
@@ -188,7 +197,7 @@ const DurationOptions = () => {
                     Intervals
                     <OptionInputContainer style={{ flexDirection: 'row', width: '80px' }}>
                         <OptionInput as='div'>
-                            {intervals}
+                            {timerState.intervals}
                         </OptionInput>
                         <Chevrons>
                             <Chevron onClick={() => chevronClickHandler(1)}>
