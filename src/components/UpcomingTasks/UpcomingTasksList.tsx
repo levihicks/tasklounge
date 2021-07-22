@@ -40,7 +40,9 @@ const UpcomingTasksList = () => {
     let [tasksSortedByDate, setTasksSortedByDate] = useState({} as TasksByDate);
 
     const sortByDate = useCallback(() => {
-        const tasksWithDeadlines: Task[] = tasks.filter(t => t.deadline);
+        const tasksWithDeadlines: Task[] = tasks.filter(t => 
+            t.deadline && t.progressState !== 2
+        );
         if (tasksWithDeadlines.length === 0) setTasksSortedByDate({});
         tasksWithDeadlines.sort((x: Task, y: Task) => {
             const [xDeadline, yDeadline] = [
@@ -52,6 +54,7 @@ const UpcomingTasksList = () => {
         });
         const tasksByDateObj: TasksByDate = {};
         tasksWithDeadlines.forEach(t => {
+            console.log(t);
             const taskDeadline = (t as TaskWithDeadline).deadline;
             if (taskDeadline in tasksByDateObj) 
                 tasksByDateObj[taskDeadline].push({title: t.title, id: t.id!});
