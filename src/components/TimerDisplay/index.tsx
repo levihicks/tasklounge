@@ -36,9 +36,7 @@ const TimerDisplay = ({className}: {className?: string}) => {
     useEffect(updateTimerDisplay, [updateTimerDisplay]);
 
     useEffect(() => {
-        console.log('here');
         if (timerFinished) {
-            console.log('and in here?');
             dispatch(resetTimerFinished());
             clearInterval(timerListener.current);
             timerListener.current = null;
@@ -49,12 +47,6 @@ const TimerDisplay = ({className}: {className?: string}) => {
             }
         } 
     }, [beep, muted, timerFinished, dispatch, pomodoroModeOn]);
-
-    useEffect(() => {
-        console.log(timerFinished);
-    }, [timerFinished]);
-
-    // useEffect(timerFinishedHandler, [timerFinishedHandler]);
 
     const timeString = (s: number) => {
         let seconds = s % 60;

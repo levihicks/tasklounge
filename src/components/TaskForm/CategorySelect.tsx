@@ -32,7 +32,7 @@ const Category = styled.div`
 const AddCategory = styled.div`
     border-bottom: 2px solid ${props => props.theme.colors.orange};
     width: 90%;
-    margin: auto;
+    margin: 0 auto;
     display: flex;
     align-items: center;
 `;
@@ -73,10 +73,10 @@ const AddCategoryInput = styled.input`
 interface CategorySelectProps {
     headingText: string;
     selectedCategories: string[];
-    toggleCategory: (category: string) => void;
+    callbackFn: (newCategories: string[]) => void;
 }
 
-const CategorySelect = ({ headingText, selectedCategories, toggleCategory }: CategorySelectProps) => {
+const CategorySelect = ({ headingText, selectedCategories, callbackFn }: CategorySelectProps) => {
 
     const [addCategoryInput, setAddCategoryInput] = useState('');
     const user = useContext(AuthContext);
@@ -84,6 +84,16 @@ const CategorySelect = ({ headingText, selectedCategories, toggleCategory }: Cat
     const categories = useAppSelector(state => state.tasks.categories);
     const tasks = useAppSelector(state => state.tasks.tasks);
 
+    const toggleCategory = (category: string) => {
+        const index = selectedCategories.indexOf(category);
+        if (index === -1)
+            callbackFn([...selectedCategories, category]);
+        else {
+            const selectedCategoriesCopy = [...selectedCategories];
+            selectedCategoriesCopy.splice(index, 1);
+            callbackFn(selectedCategoriesCopy);
+        }
+    };
 
     useEffect(() => {
         if (user) {

@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useAppSelector } from '../../hooks/typedReduxHooks';
+import Task from '../../models/task';
 import UserTask from './UserTask';
 
 const NoTasksPlaceholder = styled.div`
@@ -16,15 +17,43 @@ const NoTasksPlaceholder = styled.div`
     border-radius: 20px;
 `;
 
-const TaskList = ({ progressState }: { progressState: number }) => {
+interface TaskListProps {
+    progressState: number;
+    filteredCategories: string[];
+}
+
+const TaskList = ({ progressState, filteredCategories }: TaskListProps) => {
     const tasks = useAppSelector(state => state.tasks.tasks);
+    const [filteredTasks, setFilteredTasks] = useState([...tasks]);
+
+    let filterTasks = useCallback(() => {
+        let newFilteredTasks: Task[] = [...tasks];
+        if (newFilteredTasks.length > 0) {
+            newFilteredTasks = newFilteredTasks.filter(t => 
+                t.progressState === progressState
+            );
+            if (filteredCategories.length > 0) {
+                newFilteredTasks = newFilteredTasks.filter(t => {
+                    let categoryIncluded = false;
+                    if (t.categories)
+                        t.categories.forEach(c => {
+                            if (filteredCategories.includes(c))
+                                categoryIncluded = true; 
+                        })
+                    return categoryIncluded;
+                });
+            }
+        } 
+        setFilteredTasks([...newFilteredTasks]);
+    }, [filteredCategories, progressState, tasks]);
+
+    useEffect(filterTasks, [filterTasks]);
 
     return (
-        <div>
+        <div style={{ marginBottom: '20px' }}>
             {
-                tasks.length > 0 ?
-                tasks.filter(t => t.progressState === progressState)
-                    .map(t => (<UserTask task={t} key={t.id} />))
+                filteredTasks.length > 0 ?
+                filteredTasks.map(t => (<UserTask task={t} key={t.id} />))
                 : <NoTasksPlaceholder>No tasks.</NoTasksPlaceholder>
             }
         </div>

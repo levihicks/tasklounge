@@ -60,17 +60,6 @@ const TaskForm = ({ hide, initialTask }: { hide: () => void, initialTask?: Task 
     const [deadlineInput, setDeadlineInput] = useState(initialTaskValues.deadline);
     const [categoriesInput, setCategoriesInput] = useState<string[]>(initialTaskValues.categories);
 
-    const toggleCategory = (category: string) => {
-        const index = categoriesInput.indexOf(category);
-        if (index === -1)
-            setCategoriesInput([...categoriesInput, category]);
-        else {
-            const categoriesInputCopy = [...categoriesInput];
-            categoriesInputCopy.splice(index, 1);
-            setCategoriesInput(categoriesInputCopy);
-        }
-    };
-
     const submitHandler = () => {
         if (!initialTask) {
             const newTask: Task = {
@@ -115,7 +104,8 @@ const TaskForm = ({ hide, initialTask }: { hide: () => void, initialTask?: Task 
                     val={deadlineInput}/>
                 <CategorySelect 
                     headingText='Categories' 
-                    selectedCategories={categoriesInput} toggleCategory={toggleCategory} />
+                    selectedCategories={categoriesInput} 
+                    callbackFn={setCategoriesInput} />
                 <div style={{ display: 'flex' }}>
                     <AddTaskButton onClick={submitHandler}>{initialTask ? 'Edit task' : 'Add task'}</AddTaskButton>
                     <CancelButton onClick={hide}>Cancel</CancelButton>

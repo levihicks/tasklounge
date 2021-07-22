@@ -54,7 +54,6 @@ const UpcomingTasksList = () => {
         });
         const tasksByDateObj: TasksByDate = {};
         tasksWithDeadlines.forEach(t => {
-            console.log(t);
             const taskDeadline = (t as TaskWithDeadline).deadline;
             if (taskDeadline in tasksByDateObj) 
                 tasksByDateObj[taskDeadline].push({title: t.title, id: t.id!});
