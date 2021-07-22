@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { useAppDispatch, useAppSelector } from '../../hooks/typedReduxHooks';
-import { decrementTimeRemaining, incrementPomodoroPhase, startTimer } from '../../store/timerSlice';
+import { decrementTimeRemaining, incrementPomodoroPhase, resetTimerFinished, startTimer } from '../../store/timerSlice';
 
 const StyledTimerDisplay = styled.div`
     font-size: ${props => props.theme.fontSizes.extraLarge};
@@ -9,7 +9,7 @@ const StyledTimerDisplay = styled.div`
     margin: 20px 0;
 `;
 
-const TimerDisplay = () => {
+const TimerDisplay = ({className}: {className?: string}) => {
     let dispatch = useAppDispatch();
     let endTime = useAppSelector(state => state.timer.endTime);
     let timeRemaining = useAppSelector(state => state.timer.timeRemaining);
@@ -35,8 +35,11 @@ const TimerDisplay = () => {
 
     useEffect(updateTimerDisplay, [updateTimerDisplay]);
 
-    const timerFinishedHandler = useCallback(() => {
+    useEffect(() => {
+        console.log('here');
         if (timerFinished) {
+            console.log('and in here?');
+            dispatch(resetTimerFinished());
             clearInterval(timerListener.current);
             timerListener.current = null;
             !muted && beep.current.play();
@@ -47,7 +50,11 @@ const TimerDisplay = () => {
         } 
     }, [beep, muted, timerFinished, dispatch, pomodoroModeOn]);
 
-    useEffect(timerFinishedHandler, [timerFinishedHandler]);
+    useEffect(() => {
+        console.log(timerFinished);
+    }, [timerFinished]);
+
+    // useEffect(timerFinishedHandler, [timerFinishedHandler]);
 
     const timeString = (s: number) => {
         let seconds = s % 60;
@@ -60,7 +67,7 @@ const TimerDisplay = () => {
     };
 
     return (
-        <StyledTimerDisplay>{timeString(timeRemaining)}</StyledTimerDisplay>
+        <StyledTimerDisplay className={className}>{timeString(timeRemaining)}</StyledTimerDisplay>
     );
 };
 

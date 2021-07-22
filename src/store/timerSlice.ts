@@ -29,7 +29,7 @@ export const timerSlice = createSlice({
         pomodoroDuration: { 
             pomodoro: 25, 
             shortBreak: 5, 
-            longBreak: 15 
+            longBreak: 15
         },
         pomodoroPhase: 0,
         intervals: 4,
@@ -89,6 +89,9 @@ export const timerSlice = createSlice({
         incrementPomodoroPhase: (state) => {
             state.pomodoroPhase = (state.pomodoroPhase + 1) % (state.intervals * 2);
             if (state.timeRemaining !== 0) state.timeRemaining = 0;
+        },
+        resetTimerFinished: (state) => {
+            state.timerFinished = false;
         }
     }
 });
@@ -103,7 +106,8 @@ export const {
     setIntervals,
     decrementTimeRemaining,
     pauseTimer,
-    incrementPomodoroPhase
+    incrementPomodoroPhase,
+    resetTimerFinished
 } = timerSlice.actions;
 
 export default timerSlice.reducer;

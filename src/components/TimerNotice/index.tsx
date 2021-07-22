@@ -4,11 +4,15 @@ import * as ROUTES from '../../constants/routes';
 import styled from 'styled-components';
 import Card from '../UI/Card';
 import RightArrow from '../../assets/right-arrow.png';
+import { useAppSelector } from '../../hooks/typedReduxHooks';
+import TimerDisplay from '../TimerDisplay';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faClock } from '@fortawesome/free-solid-svg-icons';
 
-const StyledTimerNotice = styled.div`
-    display: flex;
+const StyledTimerNotice = styled.div<{ visible?: boolean }>`
     justify-content: space-around;
     align-items: center;
+    display: ${props => props.visible ? 'flex' : 'none'};
 `;
 
 const TitleAndDescription = styled.div`
@@ -35,8 +39,12 @@ const StyledCard = styled(Card)`
     margin: 50px 0;
 `;
 
+const StyledTimerDisplay = styled(TimerDisplay)`
+`;
+
 const TimerNotice = () => {
     let history = useHistory();
+    const endTime = useAppSelector(state => state.timer.endTime);
 
     const clickHandler = () => {
         history.push(ROUTES.TIMER);
@@ -44,14 +52,20 @@ const TimerNotice = () => {
 
     return (
         <StyledCard>
-            <StyledTimerNotice>
+            <StyledTimerNotice visible={!endTime}>
                 <TitleAndDescription>
                     <div>Timer</div>
-                    <Description>Featuring the Pomodoro Method!</Description>
+                    <Description>
+                        Featuring the Pomodoro Method!
+                    </Description>
                 </TitleAndDescription>
                 <GoToButton onClick={clickHandler}>
                     <img alt='' src={RightArrow} height='20' />
                 </GoToButton>
+            </StyledTimerNotice>
+            <StyledTimerNotice visible={!!endTime}>
+                <FontAwesomeIcon icon={faClock} size='3x'/>
+                <StyledTimerDisplay />
             </StyledTimerNotice>
         </StyledCard>
     );

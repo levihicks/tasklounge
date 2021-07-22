@@ -17,7 +17,10 @@ interface CardProps {
 
 const Card = ({ children, className, mouseEnter, mouseLeave }: CardProps ) => {
     return (
-        <StyledCard className={className} onMouseEnter={mouseEnter} onMouseLeave={mouseLeave}>
+        <StyledCard 
+            className={className} 
+            onMouseEnter={mouseEnter} 
+            onMouseLeave={mouseLeave}>
             {children}
         </StyledCard>
     );

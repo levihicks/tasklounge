@@ -1,10 +1,23 @@
 import React from 'react';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPause, faPlay, faVolumeMute, faVolumeUp, faStepForward, faStop } from '@fortawesome/free-solid-svg-icons';
+import { 
+    faPause, 
+    faPlay, 
+    faVolumeMute, 
+    faVolumeUp, 
+    faStepForward, 
+    faStop 
+} from '@fortawesome/free-solid-svg-icons';
 import theme from '../../theme';
 import { useAppDispatch, useAppSelector } from '../../hooks/typedReduxHooks';
-import { incrementPomodoroPhase, pauseTimer, setMuted, startTimer, stopTimer } from '../../store/timerSlice';
+import { 
+    incrementPomodoroPhase, 
+    pauseTimer, 
+    setMuted, 
+    startTimer, 
+    stopTimer 
+} from '../../store/timerSlice';
 
 const TimerButton = styled.div<{disabled?: boolean}>`
     cursor: ${props => props.disabled ? 'disabled' : 'pointer'};
