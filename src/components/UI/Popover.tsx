@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 
 const StyledPopover = styled.div`
     background: ${props => props.theme.colors.lightOrange};
@@ -17,3 +17,4 @@ const Popover = ({ children, className }: { children: React.ReactNode, className
 };
 
 export default Popover;
+

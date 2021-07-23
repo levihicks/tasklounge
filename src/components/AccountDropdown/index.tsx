@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import UserIcon from '../../assets/user.png';
 import { signOutHandler } from '../../services/firebase';
 import { AuthContext } from '../../contexts/AuthContext';
@@ -11,9 +11,6 @@ const StyledAccountDropdown = styled.div`
     color: ${props => props.theme.colors.orange};
     font-weight: bold;
     cursor: pointer;
-    &:hover {
-        color: ${props => props.theme.colors.blue};
-    }
 `;
 
 const StyledUserIcon = styled.img`
@@ -21,9 +18,16 @@ const StyledUserIcon = styled.img`
     height: 45px;
 `;
 
+const UserName = styled.div`
+    &:hover {
+        opacity: 0.7;
+    }
+`;
+
 const DropdownArrow = styled.div`
     margin-left: 5px;
     font-size: ${props => props.theme.fontSizes.extraSmall};
+    transition: transform .3s;
     &.open {
         transform: rotate(180deg);
     }
@@ -31,7 +35,18 @@ const DropdownArrow = styled.div`
 
 const SignOut = styled.div`
     &:hover {
-        color: ${props => props.theme.colors.white};
+        opacity: 0.7;
+    }
+`;
+
+const slideDown = keyframes`
+    from {
+        transform: translateY(0px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(45px);
+        opacity: 1;
     }
 `;
 
@@ -39,6 +54,7 @@ const StyledPopover = styled(Popover)`
     width: 150px;
     position: absolute;
     transform: translateY(45px);
+    animation: ${slideDown} 0.3s linear 1;
 `;
 
 const AccountDropdown = () => {
@@ -47,7 +63,8 @@ const AccountDropdown = () => {
 
     return (
         <StyledAccountDropdown onClick={() => setDropdownOpen(!dropdownOpen)}>
-            <StyledUserIcon src={UserIcon} /> {user && user?.displayName} 
+            <StyledUserIcon src={UserIcon} /> 
+            <UserName>{user && user?.displayName}</UserName> 
             <DropdownArrow className={`${dropdownOpen && 'open'}`}>▼</DropdownArrow>
             {   
                 dropdownOpen &&

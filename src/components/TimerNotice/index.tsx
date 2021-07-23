@@ -33,6 +33,10 @@ const GoToButton = styled.div`
     justify-content: center;
     border-radius: 10px;
     cursor: pointer;
+
+    &:hover { 
+        opacity: 0.7;
+    }
 `;
 
 const StyledCard = styled(Card)`

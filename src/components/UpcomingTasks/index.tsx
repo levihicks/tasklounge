@@ -31,6 +31,10 @@ const AddTaskButton = styled.div`
     border-radius: 15px;
     flex-grow: 1;
     cursor: pointer;
+
+    &:hover {
+        opacity: 0.7;
+    }
 `;
 
 const UpcomingTasks = () => {

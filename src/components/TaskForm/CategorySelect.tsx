@@ -8,11 +8,11 @@ import { useAppDispatch, useAppSelector } from '../../hooks/typedReduxHooks';
 import { replaceCategories, replaceTasks, setCategories } from '../../store/tasksSlice';
 import Task from '../../models/task';
 
-const Checkbox = styled.div<{checked: Boolean}>`
+const Checkbox = styled.div<{ checked: boolean }>`
     height: 25px;
     width: 25px;
     border: 3px solid ${props => props.theme.colors.orange};
-    background: ${props => props.checked ? props.theme.colors.orange : props.theme.colors.white};
+    background-color: ${props => props.checked ? props.theme.colors.orange : props.theme.colors.white};
     cursor: pointer;
     margin-right: 5px;
 `;
@@ -149,7 +149,10 @@ const CategorySelect = ({ headingText, selectedCategories, callbackFn }: Categor
                                     onClick={() => toggleCategory(c)}>
                                 </Checkbox> 
                                 {c}
-                                <StyledDeleteIcon onClick={() => deleteCategoryHandler(c)} src={AddIcon} alt='' />
+                                <StyledDeleteIcon 
+                                    onClick={() => deleteCategoryHandler(c)} 
+                                    src={AddIcon} 
+                                    alt='' />
                             </Category>
                         );
                     }) : 'No categories. Add some to organize your tasks.'}

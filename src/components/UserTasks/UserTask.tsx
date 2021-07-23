@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import Card from '../UI/Card';
 import Popover from '../UI/Popover';
 import OptionsButtonImage from '../../assets/options-button.png';
@@ -62,12 +62,24 @@ const StyledCard = styled(Card)`
     position: relative;
 `;
 
+const fadeIn = keyframes`
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0px);
+    }
+`;
+
 const StyledPopover = styled(Popover)`
     position: absolute;
     left: 95%;
     top: 5%;
     border-radius: 10px;
     min-width: 80px;
+    animation: ${fadeIn} 0.2s linear 1;
 `;
 
 const OptionsPopoverButton = styled.div`

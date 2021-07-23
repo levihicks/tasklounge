@@ -1,5 +1,14 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
+
+const fadeIn = keyframes`
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 0.5;
+    }
+`;
 
 const StyledBackdrop = styled.div`
     position: fixed;
@@ -10,6 +19,7 @@ const StyledBackdrop = styled.div`
     opacity: .5;
     background: ${props => props.theme.colors.navy};
     z-index: 99;
+    animation: ${fadeIn} 0.3s linear 1;
 `;
 
 const Backdrop = ({ hide, styleProps }: { hide: () => void, styleProps: {[key: string]: any} | undefined }) => {
