@@ -1,8 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
+import firebase from 'firebase';
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import Card from '../components/UI/Card';
-import { auth, uiConfig } from '../services/firebase';
+import { auth } from '../services/firebase';
+import { createBrowserHistory } from 'history';
+import { useAppDispatch } from '../hooks/typedReduxHooks';
+import { setTasksInitialized } from '../store/tasksSlice';
+
 
 const StyledSignIn = styled.div`
     display: flex;
@@ -22,6 +27,24 @@ const StyledCard = styled(Card)`
 `;
 
 const SignIn = () => {
+    let dispatch = useAppDispatch();
+
+    let uiConfig = {
+        signInFlow: 'popup',
+        signInSuccessUrl: '/',
+        signInOptions: [
+            firebase.auth.EmailAuthProvider.PROVIDER_ID,
+            firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+        ],
+        callbacks: {
+            signInSuccessWithAuthResult: () => {
+                createBrowserHistory().goBack();
+                dispatch(setTasksInitialized(false));
+                return false;
+            }
+        }
+    };
+
     return (
         <StyledSignIn>
             <StyledCard>

@@ -55,6 +55,7 @@ const Dashboard = () => {
     const dispatch = useAppDispatch();
     const tasksLoading = useAppSelector(state => state.tasks.loading);
     const tasksError = useAppSelector(state => state.tasks.error);
+    const tasksInitialized = useAppSelector(state => state.tasks.tasksInitialized);
 
     useEffect(() => {
         if (user) {
@@ -67,6 +68,8 @@ const Dashboard = () => {
                 userTasksRef(user.uid).off('value', listener);
             }
         }
+        else if (user === false) 
+            dispatch(replaceTasks({}));
     }, [user, dispatch]);
 
     return (
@@ -103,7 +106,7 @@ const Dashboard = () => {
                 )
             }
             {
-                tasksLoading && 
+                (tasksLoading || !tasksInitialized) && 
                     <StyledModal 
                         backdropStyle={{zIndex: 101}} 
                         hide={() => {}}>

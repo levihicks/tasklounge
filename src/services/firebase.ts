@@ -1,6 +1,5 @@
 import firebase from 'firebase';
 import 'firebase/auth';
-import { createBrowserHistory } from 'history';
 import Task from '../models/task';
 
 let firebaseConfig = {
@@ -15,21 +14,6 @@ let firebaseConfig = {
 
 if(firebase.apps.length === 0)
     firebase.initializeApp(firebaseConfig);
-
-export const uiConfig = {
-    signInFlow: 'popup',
-    signInSuccessUrl: '/',
-    signInOptions: [
-        firebase.auth.EmailAuthProvider.PROVIDER_ID,
-        firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-    ],
-    callbacks: {
-        signInSuccessWithAuthResult: () => {
-            createBrowserHistory().goBack();
-            return false;
-        }
-    }
-};
 
 export const auth = firebase.auth();
 

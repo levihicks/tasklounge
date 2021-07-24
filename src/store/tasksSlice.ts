@@ -38,7 +38,8 @@ export const tasksSlice = createSlice({
         tasks: [] as Task[],
         categories: [] as string[],
         loading: false,
-        error: false
+        error: false,
+        tasksInitialized: false
     },
     reducers: {
         replaceTasks: (state, action: PayloadAction<{[key: string]: Task}>) => {
@@ -51,12 +52,16 @@ export const tasksSlice = createSlice({
             else {
                 state.tasks = [];
             }
+            if (!state.tasksInitialized) state.tasksInitialized = true;
         },
         replaceCategories: (state, action: PayloadAction<string[]>) => {
                 state.categories = action.payload || [];
         },
         removeError: (state) => {
             state.error = false;
+        },
+        setTasksInitialized: (state, action: PayloadAction<boolean>) => {
+            state.tasksInitialized = action.payload;
         }
     },
     extraReducers: (builder) => {
@@ -103,6 +108,11 @@ export const tasksSlice = createSlice({
     }
 });
 
-export const { replaceTasks, replaceCategories, removeError } = tasksSlice.actions;
+export const { 
+    replaceTasks, 
+    replaceCategories,
+    removeError, 
+    setTasksInitialized 
+} = tasksSlice.actions;
 
 export default tasksSlice.reducer;
