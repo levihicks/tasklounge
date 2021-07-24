@@ -16,6 +16,7 @@ const GlobalStyle = createGlobalStyle`
     background-color: ${props => props.theme.colors.white};
     color: ${props => props.theme.colors.navy};
     font-family: 'Lato', sans-serif;
+    overflow-y: scroll;
   }
   
   * {
