@@ -15,6 +15,10 @@ interface UserTasksOptionProps {
 const StyledUserTasks = styled.div`
     display: flex;
     flex-direction: column;
+
+    @media(max-width: ${props => props.theme.mobileBreakpoint}) {
+        align-items: center;
+    }
 `;
 
 const UserTasksHeading = styled.div`
@@ -49,6 +53,10 @@ const StyledModal = styled(Modal)`
     display: flex;
     flex-direction: column;
     justify-content: center;
+
+    @media(max-width: ${props => props.theme.mobileBreakpoint}) {
+        min-height: 200px;
+    }
 `;
 
 const CategoryBubbles = styled.div`

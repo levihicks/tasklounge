@@ -18,5 +18,6 @@ declare module 'styled-components' {
 			large: string;
 			extraLarge: string;
 		};
+		mobileBreakpoint: string;
 	}
 }

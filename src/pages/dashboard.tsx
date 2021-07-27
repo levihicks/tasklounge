@@ -18,6 +18,14 @@ import Modal from '../components/UI/Modal';
 const StyledDashboard = styled.div`
     margin-left: 30px;
     display: flex;
+
+    @media(max-width: ${props => props.theme.mobileBreakpoint}) {
+        flex-direction: column;
+        margin: auto;
+        margin-top: 70px;
+        max-width: 100%;
+        padding: 0px 10px;
+    }
 `;
 
 const DashboardColumn = styled.div`
@@ -26,6 +34,10 @@ const DashboardColumn = styled.div`
     margin-left: 50px;
     display: flex;
     flex-direction: column;
+
+    @media(max-width: ${props => props.theme.mobileBreakpoint}) {
+        margin-left: 0px;
+    }
 `;
 
 const StyledCard = styled(Card)`
@@ -47,7 +59,7 @@ const StyledModal = styled(Modal)`
     min-width: 300px;
     min-height: 300px;
     z-index: 102;
-`
+`;
 
 const Dashboard = () => {
     let user = useContext(AuthContext);

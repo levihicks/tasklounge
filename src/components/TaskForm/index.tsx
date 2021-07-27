@@ -24,6 +24,10 @@ const Button = styled.div`
     text-align: center;
     width: 30%;
     cursor: pointer;
+
+    @media(max-width: ${props => props.theme.mobileBreakpoint}) {
+        width: unset;
+    }
 `;
 
 const AddTaskButton = styled(Button)`

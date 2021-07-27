@@ -80,6 +80,12 @@ const StyledPopover = styled(Popover)`
     border-radius: 10px;
     min-width: 80px;
     animation: ${fadeIn} 0.2s linear 1;
+
+    @media(max-width: ${props => props.theme.mobileBreakpoint}) {
+        left: unset;
+        right: -0%;
+        top: 45%;
+    }
 `;
 
 const OptionsPopoverButton = styled.div`
@@ -119,7 +125,9 @@ const UserTask = ({ task }: { task: Task }) => {
         <StyledCard mouseLeave={() => setOptionsVisible(false)}>
             <TitleAndOptionsButton>
                 <TaskTitle>{task.title}</TaskTitle>
-                <StyledOptionsButton onMouseEnter={() => setOptionsVisible(true)} >
+                <StyledOptionsButton 
+                    onMouseEnter={() => setOptionsVisible(true)}
+                    onClick={() => setOptionsVisible(true)}>
                     <img alt='' src={OptionsButtonImage} />
                 </StyledOptionsButton>
                 {

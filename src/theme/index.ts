@@ -16,7 +16,8 @@ const theme: DefaultTheme = {
 		medium: '1.5rem',
 		large: '2rem',
 		extraLarge: '3rem'
-	}
+	},
+	mobileBreakpoint: '767px'
 };
 
 export default theme;

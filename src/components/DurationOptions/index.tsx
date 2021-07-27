@@ -48,9 +48,18 @@ const OptionInputContainer = styled.div<{period?: string}>`
     flex-direction: column;
 `;
 
-const Row = styled.div`
+const Row = styled.div<{ columnFormat?: boolean }>`
     display: flex;
     margin: 10px 0;
+
+    @media(max-width: ${props => props.theme.mobileBreakpoint}) {
+        flex-direction: ${props => props.columnFormat ? 'column' : 'row'};
+        ${props => props.columnFormat && 'padding-bottom: 20px;'}
+
+        & > div {
+            ${props => props.columnFormat && 'margin: 10px 0;'}
+        }
+    }
 `;
 
 const OptionInput = styled.input`
@@ -153,7 +162,7 @@ const DurationOptions = () => {
                     period='longBreak' 
                     active={timerState.pomodoroPhase === timerState.intervals * 2 - 1} />
             </Row>
-            <Row>
+            <Row columnFormat={true}>
                 <DurationOption>
                     Work
                     <OptionInputContainer period='pomodoro'>

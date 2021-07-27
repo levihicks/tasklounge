@@ -8,6 +8,10 @@ const StyledLayout = styled.div`
     padding-top: 20px;
     max-width: 1368px;
     display: flex;
+
+    @media(max-width: ${props => props.theme.mobileBreakpoint}) {
+        padding-top: 0px;
+    }
 `;
 
 const Layout = ({ children }: { children: React.ReactNode }) => {

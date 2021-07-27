@@ -65,7 +65,9 @@ const Search = ({ searchingState, setSearchingState }: SearchProps) => {
             </StyledSearchbox>
             {   
                 searchingState && (searchResults.length > 0 
-                ? searchResults.map(t => <UserTask task={t} key={t.id} />) 
+                ? <div style={{ alignSelf: 'center' }}>
+                    {searchResults.map(t => <UserTask task={t} key={t.id} />)}
+                </div>
                 : "No results found.")
             }
         </>

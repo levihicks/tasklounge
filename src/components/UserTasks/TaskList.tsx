@@ -15,6 +15,7 @@ const NoTasksPlaceholder = styled.div`
     font-weight: bold;
     height: 180px;
     border-radius: 20px;
+    min-width: 200px;
 `;
 
 interface TaskListProps {

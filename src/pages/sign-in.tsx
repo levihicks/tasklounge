@@ -14,6 +14,11 @@ const StyledSignIn = styled.div`
     align-items: center;
     flex-direction: column;
     width: 50%;
+
+    @media(max-width: 767px) {
+        margin: auto;
+        margin-top: 70px; 
+    }
 `;
 
 const SignInHeading = styled.div`

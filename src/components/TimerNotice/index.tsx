@@ -13,6 +13,10 @@ const StyledTimerNotice = styled.div<{ visible?: boolean }>`
     justify-content: space-around;
     align-items: center;
     display: ${props => props.visible ? 'flex' : 'none'};
+
+    @media(max-width: ${props => props.theme.mobileBreakpoint}) {
+        align-self: center;
+    }
 `;
 
 const TitleAndDescription = styled.div`
@@ -41,6 +45,10 @@ const GoToButton = styled.div`
 
 const StyledCard = styled(Card)`
     margin: 50px 0;
+    
+    @media(max-width: ${props => props.theme.mobileBreakpoint}) {
+        align-self: center;   
+    }
 `;
 
 const StyledTimerDisplay = styled(TimerDisplay)`

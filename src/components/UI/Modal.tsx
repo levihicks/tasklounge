@@ -1,18 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import styled, { keyframes } from 'styled-components';
+import styled from 'styled-components';
 import Backdrop from './Backdrop';
-
-const popUp = keyframes`
-    from {
-        opacity: 0.3;
-        transform: translate(-50%, -100%);
-    }
-    to {
-        opacity: 1;
-        transform: translate(-50%, -50%);
-    }
-`;
 
 const StyledModal = styled.div`
     min-height: 600px;
@@ -25,7 +14,12 @@ const StyledModal = styled.div`
     transform: translate(-50%, -50%);
     padding: 15px 30px;
     border-radius: 10px;
-    animation: ${popUp} 0.3s linear 1;
+
+    @media(max-width: ${props => props.theme.mobileBreakpoint}) {
+        width: 90%;
+        min-width: unset;
+        min-height: 300px;
+    }
 `;
 
 interface ModalProps {

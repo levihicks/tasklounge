@@ -12,6 +12,11 @@ const StyledTimer = styled.div`
     align-items: center;
     min-width: 800px;
     margin-top: 30px;
+
+    @media(max-width: ${props => props.theme.mobileBreakpoint}) {
+        margin-top: 70px;
+        min-width: 100%;
+    }
 `;
 
 const Row = styled.div`
