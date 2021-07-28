@@ -103,7 +103,8 @@ const UserTasks = () => {
                 </StyledIcon>
             </UserTasksHeading>
             {filterModalOpen && 
-                <StyledModal hide={() => setFilterModalOpen(false)}>
+                <StyledModal
+                    hide={() => setFilterModalOpen(false)}>
                     <StyledIcon 
                         style={{position: 'absolute', top: 20, left: 20}} 
                         onClick={() => setFilterModalOpen(false)}>

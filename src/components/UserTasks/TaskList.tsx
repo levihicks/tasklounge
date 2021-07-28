@@ -18,6 +18,14 @@ const NoTasksPlaceholder = styled.div`
     min-width: 200px;
 `;
 
+const StyledTaskList = styled.div`
+    margin-bottom: 20px;
+
+    @media(max-width: ${props => props.theme.mobileBreakpoint}) {
+        width: 100%;
+    }
+`;
+
 interface TaskListProps {
     progressState: number;
     filteredCategories: string[];
@@ -51,13 +59,13 @@ const TaskList = ({ progressState, filteredCategories }: TaskListProps) => {
     useEffect(filterTasks, [filterTasks]);
 
     return (
-        <div style={{ marginBottom: '20px' }}>
+        <StyledTaskList>
             {
                 filteredTasks.length > 0 ?
                 filteredTasks.map(t => (<UserTask task={t} key={t.id} />))
                 : <NoTasksPlaceholder>No tasks.</NoTasksPlaceholder>
             }
-        </div>
+        </StyledTaskList>
     );
 }
 

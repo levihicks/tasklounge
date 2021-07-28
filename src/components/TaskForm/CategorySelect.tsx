@@ -19,6 +19,8 @@ const Checkbox = styled.div<{ checked: boolean }>`
 
 const Categories = styled.div`
     margin: 20px;
+    max-height: 60px;
+    overflow: auto;
 `;
 
 const Category = styled.div`

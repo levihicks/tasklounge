@@ -49,6 +49,10 @@ const StyledCard = styled(Card)`
     align-items: center;
     justify-content: center;
     margin: 50px;
+
+    @media(max-width: ${props => props.theme.mobileBreakpoint}) {
+        margin: 0;
+    }
 `;
 
 const StyledModal = styled(Modal)`

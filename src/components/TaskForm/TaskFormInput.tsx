@@ -9,6 +9,10 @@ const Input = styled.input`
     font-size: ${props => props.theme.fontSizes.medium};
     color: inherit;
     background: none;
+
+    @media(max-width: ${props => props.theme.mobileBreakpoint}) {
+        height: 50px;
+    }
 `;
 
 interface TaskFormInputProps {

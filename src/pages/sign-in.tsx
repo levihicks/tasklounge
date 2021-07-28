@@ -8,7 +8,6 @@ import { createBrowserHistory } from 'history';
 import { useAppDispatch } from '../hooks/typedReduxHooks';
 import { setTasksInitialized } from '../store/tasksSlice';
 
-
 const StyledSignIn = styled.div`
     display: flex;
     align-items: center;

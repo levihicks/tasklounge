@@ -11,7 +11,7 @@ const StyledSearchbox = styled.div`
     padding: 10px;
     margin: 30px 0;
     display: flex;
-    align-items: flex-start;
+    align-items: center;
 `;
 
 const StyledSearchboxInput = styled.input`

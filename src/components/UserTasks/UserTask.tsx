@@ -2,7 +2,6 @@ import React, { useContext, useState } from 'react';
 import styled, { keyframes } from 'styled-components';
 import Card from '../UI/Card';
 import Popover from '../UI/Popover';
-import OptionsButtonImage from '../../assets/options-button.png';
 import DeadlineIcon from '../../assets/deadline.png';
 import Task from '../../models/task';
 import * as progressStates from '../../constants/progressStates';
@@ -10,11 +9,15 @@ import { AuthContext } from '../../contexts/AuthContext';
 import TaskForm from '../TaskForm';
 import { removeTask, updateTask } from '../../store/tasksSlice';
 import { useAppDispatch } from '../../hooks/typedReduxHooks';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEllipsisV } from '@fortawesome/free-solid-svg-icons';
 
 const StyledOptionsButton = styled.div`
     cursor: pointer;
     height: 15px;
     display: flex;
+    width: 20px;
+    justify-content: center;
 `;
 
 const TitleAndOptionsButton = styled.div`
@@ -128,7 +131,7 @@ const UserTask = ({ task }: { task: Task }) => {
                 <StyledOptionsButton 
                     onMouseEnter={() => setOptionsVisible(true)}
                     onClick={() => setOptionsVisible(true)}>
-                    <img alt='' src={OptionsButtonImage} />
+                    <FontAwesomeIcon icon={faEllipsisV} />
                 </StyledOptionsButton>
                 {
                     optionsVisible && 

@@ -24,7 +24,7 @@ const StyledSidebarNav = styled.div<{menuActive: boolean}>`
         min-width: 100%;
         background-color: ${props => props.theme.colors.orange};
         position: fixed;
-        height: ${props => props.menuActive ? '100vh' : 'auto'};
+        height: ${props => props.menuActive ? '100%' : 'auto'};
         z-index: 2;
     }
 `;

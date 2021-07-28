@@ -5,7 +5,10 @@ import Backdrop from './Backdrop';
 
 const StyledModal = styled.div`
     min-height: 600px;
+    max-height: 100vh;
     min-width: 600px;
+    max-width: 100vw;
+    overflow: auto;
     z-index: 100;
     background: ${props => props.theme.colors.white};
     position: fixed;

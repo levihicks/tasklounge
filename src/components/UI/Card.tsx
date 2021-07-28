@@ -6,6 +6,10 @@ const StyledCard = styled.div`
     width: 400px;
     padding: 25px;
     border-radius: 15px;
+
+    @media(max-width: ${props => props.theme.mobileBreakpoint}) {
+        width: 100%;
+    }
 `;
 
 interface CardProps { 

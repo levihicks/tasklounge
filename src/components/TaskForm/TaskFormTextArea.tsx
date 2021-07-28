@@ -12,6 +12,10 @@ const TextArea = styled.textarea`
     max-width: 100%;
     font: inherit;
     margin: 20px 0;
+
+    @media(max-width: ${props => props.theme.mobileBreakpoint}) {
+        height: 60px;
+    }
 `;
 
 interface TaskFormTextAreaProps {
