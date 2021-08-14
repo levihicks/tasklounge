@@ -67,7 +67,7 @@ const StyledModal = styled(Modal)`
 
 const Dashboard = () => {
     let user = useContext(AuthContext);
-    let [userSearching, setUserSearching] = useState(false);
+    const [userSearching, setUserSearching] = useState(false);
     const dispatch = useAppDispatch();
     const tasksLoading = useAppSelector(state => state.tasks.loading);
     const tasksError = useAppSelector(state => state.tasks.error);

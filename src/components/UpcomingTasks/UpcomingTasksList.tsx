@@ -37,7 +37,7 @@ interface TasksByDate {
 
 const UpcomingTasksList = () => {
     const tasks = useAppSelector(state => state.tasks.tasks);
-    let [tasksSortedByDate, setTasksSortedByDate] = useState({} as TasksByDate);
+    const [tasksSortedByDate, setTasksSortedByDate] = useState({} as TasksByDate);
 
     const sortByDate = useCallback(() => {
         const tasksWithDeadlines: Task[] = tasks.filter(t => 

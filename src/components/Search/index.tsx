@@ -33,8 +33,8 @@ interface SearchProps {
 } 
 
 const Search = ({ searchingState, setSearchingState }: SearchProps) => {
-    let [inputValue, setInputValue] = useState('');
-    let [searchResults, setSearchResults] = useState<Task[]>([]);
+    const [inputValue, setInputValue] = useState('');
+    const [searchResults, setSearchResults] = useState<Task[]>([]);
     const tasks = useAppSelector(state => state.tasks.tasks);
 
     const onInputValueChange = (value: string) => {
