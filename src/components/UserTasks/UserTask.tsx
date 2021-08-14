@@ -11,6 +11,7 @@ import { removeTask, updateTask } from '../../store/tasksSlice';
 import { useAppDispatch } from '../../hooks/typedReduxHooks';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsisV } from '@fortawesome/free-solid-svg-icons';
+import convertTimeString from '../../utils/convertTimeString';
 
 const StyledOptionsButton = styled.div`
     cursor: pointer;
@@ -149,7 +150,12 @@ const UserTask = ({ task }: { task: Task }) => {
                 {task.description}
             </StyledTaskDescription>
             <TaskFooter>
-                {task.deadline && <Deadline><img alt='' src={DeadlineIcon} />{task.deadline}</Deadline>}
+                {task.deadline && 
+                (
+                    <Deadline>
+                        <img alt='' src={DeadlineIcon} />{convertTimeString(task.deadline)}
+                    </Deadline>
+                )}
                 <UpdateProgressButton onClick={() => {updateProgressState(task.id!, task.progressState)}}>
                     {task.progressState === progressStates.TO_BEGIN 
                     ? "Mark as in progress" 

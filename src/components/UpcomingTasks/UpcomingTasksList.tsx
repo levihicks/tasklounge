@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useAppSelector } from '../../hooks/typedReduxHooks';
 import Task from '../../models/task';
+import convertTimeString from '../../utils/convertTimeString';
 
 const TaskDate = styled.div`
     color: ${props => props.theme.colors.gray};
@@ -64,10 +65,6 @@ const UpcomingTasksList = () => {
     }, [tasks]);
 
     useEffect(sortByDate, [tasks, sortByDate]);
-
-    const convertTimeString = (timeString: string) => {
-        return new Date(timeString + 'T00:00').toDateString();
-    };
 
     return (
         <div style={{ marginTop: '10px' }}>
